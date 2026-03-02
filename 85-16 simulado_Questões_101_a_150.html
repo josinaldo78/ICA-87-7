@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAOF 2025 · ICA 85-16 (questões 101-150)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 20px;
+        }
+        /* capa azul escuro */
+        .capa {
+            background-color: #0b1e4a;
+            color: white;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 40px -10px rgba(0,20,50,0.5);
+            border: 1px solid #2d4b8c;
+        }
+        .capa h1 {
+            font-size: 3.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .capa h3 {
+            font-size: 2rem;
+            font-weight: 400;
+            background-color: rgba(255,255,255,0.1);
+            padding: 12px 40px;
+            border-radius: 60px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(4px);
+        }
+        .capa .ref {
+            background-color: #1e3a8a;
+            padding: 30px 25px;
+            border-radius: 40px;
+            max-width: 800px;
+            margin: 30px auto;
+            font-size: 1.2rem;
+            border-left: 6px solid #fbbf24;
+        }
+        .capa .ref p {
+            margin: 12px 0;
+        }
+        .capa button {
+            background-color: #f5c542;
+            color: #0b1e4a;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #a57c1a, 0 12px 20px rgba(0,0,0,0.3);
+            transition: 0.1s ease;
+            margin-top: 40px;
+        }
+        .capa button:hover {
+            background-color: #ffd966;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 #a57c1a, 0 18px 25px rgba(0,0,0,0.4);
+        }
+        .capa small {
+            display: block;
+            margin-top: 40px;
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        /* controle barra */
+        .controle {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 20px 25px;
+            border-radius: 60px;
+            margin: 30px 0 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .nota-box {
+            background-color: #0b1e4a;
+            color: white;
+            border-radius: 40px;
+            padding: 10px 30px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        .btn-impressao {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px #00000030;
+        }
+        .btn-impressao:hover {
+            background-color: #1a2632;
+        }
+
+        /* questões */
+        .questoes-wrapper {
+            background-color: white;
+            border-radius: 40px;
+            padding: 30px 35px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .questao-item {
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .questao-item:last-child {
+            border-bottom: none;
+        }
+        .enunciado {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            background-color: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 28px;
+        }
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .alternativa {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background-color: #f1f4f9;
+            padding: 12px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 2px solid transparent;
+        }
+        .alternativa:hover {
+            background-color: #e6eaf0;
+        }
+        .alternativa.selecionada {
+            border-color: #0b1e4a;
+            background-color: #dbeafe;
+            font-weight: 500;
+        }
+        .alternativa.errada {
+            border-color: #b91c1c;
+            background-color: #fee2e2;
+        }
+        .alternativa.certa {
+            border-color: #047857;
+            background-color: #d1fae5;
+        }
+        .letra {
+            font-weight: 700;
+            background-color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .justificativa {
+            background-color: #f1f5f9;
+            padding: 18px 22px;
+            border-radius: 28px;
+            margin-top: 15px;
+            border-left: 8px solid #0b1e4a;
+            font-size: 1rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .feedback-count {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #334155;
+            display: flex;
+            gap: 25px;
+        }
+        .btn-pequeno {
+            background: none;
+            border: 2px solid #0b1e4a;
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: #0b1e4a;
+            font-weight: 600;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        .btn-pequeno:hover {
+            background-color: #0b1e4a;
+            color: white;
+        }
+
+        /* impressão */
+        @media print {
+            .capa, .controle, .btn-impressao, .btn-pequeno, .feedback-count {
+                display: none !important;
+            }
+            .questoes-wrapper {
+                box-shadow: none;
+                padding: 0;
+            }
+            body {
+                background-color: white;
+                padding: 0.5cm;
+            }
+            .alternativa {
+                break-inside: avoid;
+                background-color: #f3f3f3 !important;
+                border: 1px solid #888;
+            }
+            .justificativa {
+                border-left: 4px solid black;
+                background-color: #f9f9f9 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- CAPA AZUL ESCURO (QUESTÕES 101-150) -->
+<div id="capa" class="capa">
+    <h1>✈️ EAOF 2025 · <p>ICA 85-16 PARTE III</h1>
+    <h3>SERVIÇOS DE ENGENHARIA QUESTÕES 101 A 150</h3>
+    <div class="ref">
+        <p>📘 <strong>ICA 85-16</strong> – FISCALIZAÇÃO E RECEBIMENTO DE OBRAS E SERVIÇOS DE ENGENHARIA (2017)</p>
+        <p>📄 Questões originais baseadas nas páginas 12 a 18 do caderno EAOF 2025 (Versão A)</p>
+        <p>🗂️ Bloco 101–150 · justificativa extraída diretamente do texto da ICA 85-16</p>
+        <p>⚙️ Modo concurso · duplo clique para confirmar · nota final · impressão A4</p>
+    </div>
+    <button id="btnIniciar">▶ INICIAR TERCEIRA PARTE</button>
+    <small>Comando da Aeronáutica · DIRINFRA</small>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL (oculto até iniciar) -->
+<div id="conteudoProva" style="display: none;">
+
+    <div class="controle">
+        <div class="nota-box" id="notaExibida">0,00</div>
+        <div style="display: flex; gap: 15px;">
+            <button class="btn-pequeno" id="limparRespostas">♻️ limpar</button>
+            <button class="btn-impressao" id="btnImprimir"><span>🖨️</span> imprimir (A4)</button>
+        </div>
+    </div>
+
+    <div id="questoesContainer" class="questoes-wrapper"></div>
+
+    <!-- totalizador inferior -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <span id="acertosStatus" style="font-weight:600;">Acertos: 0 / 50 (0%)</span>
+        <span id="errosStatus" style="font-weight:600;">Erros: 0</span>
+    </div>
+</div>
+
+<script>
+(function() {
+    // --------------------------------------------------------------
+    // BANCO DE QUESTÕES 101 a 150 (exatamente 50 itens)
+    // --------------------------------------------------------------
+    const questoes = [
+        { // 101
+            enunciado: "101) A ICA 85-16 menciona, no item 3.1.6, que a Contratada é responsável pelo encaminhamento de várias documentações à Fiscalização. Qual dos seguintes documentos é explicitamente citado?",
+            alternativas: [
+                "a) O contrato social da empresa.",
+                "b) As certidões negativas de débito da matriz.",
+                "c) Os contratos com subempreiteiras.",
+                "d) O balanço patrimonial do último exercício."
+            ],
+            correta: 2,
+            justificativa: "Item 3.1.6 lista, entre outros, 'contratos com subempreiteiras' como um dos documentos a serem encaminhados."
+        },
+        { // 102
+            enunciado: "102) Sobre a ART (Anotação de Responsabilidade Técnica), a ICA 85-16, em seu item 3.2.1.1, estabelece que a Contratada deve providenciá-la antes do início dos serviços. Em que documento da proposta da Contratada ela deve prever tempo hábil para isso?",
+            alternativas: [
+                "a) Na planilha de custos unitários.",
+                "b) No cronograma físico-financeiro.",
+                "c) Na relação de materiais.",
+                "d) No memorial descritivo."
+            ],
+            correta: 1,
+            justificativa: "Item 3.2.1.1: 'prevendo no cronograma físico-financeiro constante de sua proposta, tempo hábil para tanto.'"
+        },
+        { // 103
+            enunciado: "103) A ICA 85-16, no item 5.4.19, afirma que a Fiscalização deve manter vigilância sobre as obrigações da Contratada, fundamentalmente em relação à inarredável observância a qual Lei?",
+            alternativas: [
+                "a) Lei do Sistema de Engenharia (NSCA 85-1).",
+                "b) Lei de Introdução às Normas do Direito Brasileiro.",
+                "c) Lei nº 8.666, de 1993 e suas alterações.",
+                "d) Código de Defesa do Consumidor (Lei 8.078/90)."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.19 (e também o 5.4.15) menciona a 'inarredável observância aos princípios e preceitos consubstanciados na Lei nº 8.666, de 1993 e suas alterações.'"
+        },
+        { // 104
+            enunciado: "104) A ICA 85-16 estabelece que a Contratada deve providenciar as ligações definitivas das utilidades previstas no projeto. Em qual momento isso deve ocorrer?",
+            alternativas: [
+                "a) Antes do início da obra, para que o canteiro tenha água e luz.",
+                "b) Durante a execução da obra, para teste dos equipamentos.",
+                "c) Após a conclusão da obra, para a entrega final.",
+                "d) Tão logo a Prefeitura emita o 'Habite-se'."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.8: 'Cabe, ainda, à Contratada providenciar as ligações definitivas das utilidades previstas no projeto'. Pela lógica da sequência, isso ocorre durante a fase final da obra, antes da conclusão, para que as utilidades estejam funcionando na entrega."
+        },
+        { // 105
+            enunciado: "105) Se um membro da Comissão de Fiscalização da Obra praticar um ato relacionado à fiscalização, quem é responsável por esse ato?",
+            alternativas: [
+                "a) Apenas o membro que o praticou.",
+                "b) O Presidente da comissão.",
+                "c) Todos os membros da comissão, que são responsáveis solidários.",
+                "d) A Contratada, que é a executora do serviço."
+            ],
+            correta: 2,
+            justificativa: "Item 5.5.4: 'Os Fiscais da Obra, integrantes de uma mesma Comissão, são responsáveis solidários pelos atos praticados pelos demais, relacionados ao acompanhamento, controle e fiscalização das obras e serviços de engenharia.'"
+        },
+        { // 106
+            enunciado: "106) A ICA 85-16, ao tratar do recebimento de obras, menciona que a entrega de obras (Anexo M) tem lugar em qual situação?",
+            alternativas: [
+                "a) Quando a obra é entregue pela Contratada à Administração.",
+                "b) Quando a obra é entregue pela Administração ao usuário final.",
+                "c) Quando uma OM realiza obras para outra Organização.",
+                "d) Quando a Comissão de Recebimento entrega o TERD à DIRINFRA."
+            ],
+            correta: 2,
+            justificativa: "Item 9.4.1: 'A entrega de obras e serviços de engenharia... tem lugar quando determinada OM realiza obras e serviços de engenharia para outra Organização, devendo o Representante desta última receber a obra'."
+        },
+        { // 107
+            enunciado: "107) Em relação à obra executada para a própria OM, o item 9.4.2 da ICA 85-16 dispensa a 'Entrega' (Anexo M) e determina que a Comissão de Recebimento inclua um membro específico. Quem é esse membro?",
+            alternativas: [
+                "a) O Fiscal da Obra.",
+                "b) O Fiscal do Contrato.",
+                "c) O Gestor de Imóveis ou agente responsável pelos bens imóveis da OM.",
+                "d) Um representante da DIRINFRA."
+            ],
+            correta: 2,
+            justificativa: "Item 9.4.2: '...deverá fazer parte da Comissão de Recebimento o Gestor de Imóveis ou agente da administração responsável pelos bens imóveis da OM.'"
+        },
+        { // 108
+            enunciado: "108) A ICA 85-16 estabelece que a Contratada deve apresentar um projeto de prevenção de incêndio. Para qual área esse projeto deve ser elaborado?",
+            alternativas: [
+                "a) Para toda a edificação principal da obra.",
+                "b) Apenas para as áreas administrativas do canteiro.",
+                "c) Para todo o canteiro de obras.",
+                "d) A critério da Fiscalização, dependendo do tipo de obra."
+            ],
+            correta: 2,
+            justificativa: "Item 6.3.6: 'A Contratada deverá realizar e colocar em prática um projeto de prevenção de incêndio para todo o canteiro de obras, na forma das disposições em vigor.'"
+        },
+        { // 109
+            enunciado: "109) As divergências surgidas entre a Fiscalização da Obra e a Contratada, conforme o item 8.1.2, serão resolvidas de maneiras diferentes, dependendo da natureza. Como são resolvidas as divergências de ordem técnica?",
+            alternativas: [
+                "a) Pela Administração Contratante.",
+                "b) Pelo Poder Judiciário.",
+                "c) Pelo elo do SISENG mais diretamente associado à Fiscalização da Obra.",
+                "d) Por uma câmara de arbitragem."
+            ],
+            correta: 2,
+            justificativa: "Item 8.1.2: 'As divergências... serão resolvidas pela administração, salvo as de ordem técnica, que serão resolvidas pelo elo do SISENG mais diretamente associado à Fiscalização da Obra.'"
+        },
+        { // 110
+            enunciado: "110) A ICA 85-16 menciona, no item 3.1.12, a responsabilidade da Contratada pelo cumprimento da legislação social e trabalhista. Em relação a qual pessoal essa responsabilidade é explicitada?",
+            alternativas: [
+                "a) Apenas aos engenheiros e mestres de obra.",
+                "b) Aos funcionários da subcontratada, exclusivamente.",
+                "c) Ao pessoal alocado nas obras e serviços de engenharia, objeto do contrato.",
+                "d) Aos funcionários da Administração que atuam na fiscalização."
+            ],
+            correta: 2,
+            justificativa: "Item 3.1.12: 'particularmente no que se refere ao pessoal alocado nas obras e serviços de engenharia, objeto do contrato.'"
+        },
+        { // 111
+            enunciado: "111) A ICA 85-16 estabelece que o Fiscal da Obra deve ser um agente da Administração com formação superior ou técnica. Qual entidade define as áreas de competência profissional a serem respeitadas?",
+            alternativas: [
+                "a) O Ministério da Educação (MEC).",
+                "b) A Diretoria de Infraestrutura da Aeronáutica (DIRINFRA).",
+                "c) O Conselho Federal de Engenharia e Agronomia (CONFEA).",
+                "d) O Sindicato dos Engenheiros."
+            ],
+            correta: 2,
+            justificativa: "Item 3.2.1 menciona 'respeitadas as áreas de competência estabelecidas pelo CONFEA.' O item 5.1.1 também faz referência à 'legislação do CONFEA'."
+        },
+        { // 112
+            enunciado: "112) Sobre a anotação das ocorrências diárias, a ICA 85-16 estabelece que o Diário de Obras deve ser preenchido:",
+            alternativas: [
+                "a) Pela Contratada, com visto da Fiscalização.",
+                "b) Pela Fiscalização da Obra, regularmente.",
+                "c) Pelo engenheiro residente da obra.",
+                "d) Pelo mestre de obras, ao final de cada jornada."
+            ],
+            correta: 1,
+            justificativa: "Item 6.1.1: 'Caberá à Fiscalização da Obra preencher, regularmente, as folhas do Diário de Obras'."
+        },
+        { // 113
+            enunciado: "113) As folhas do Diário de Obras, após assinadas e numeradas, devem ser encadernadas com qual periodicidade, além das folhas de rosto, termo de abertura e encerramento?",
+            alternativas: [
+                "a) Semanalmente.",
+                "b) Quinzenalmente.",
+                "c) Mensalmente.",
+                "d) Ao final da obra."
+            ],
+            correta: 2,
+            justificativa: "Item 6.1.2: 'As folhas do Diário de Obras, após assinadas e numeradas, deverão ser encadernadas mensalmente'."
+        },
+        { // 114
+            enunciado: "114) A ICA 85-16, no item 5.4.14, orienta que a Fiscalização da Obra deve formalizar os entendimentos com a Contratada. Qual a principal razão para essa formalização?",
+            alternativas: [
+                "a) Para cumprir uma formalidade burocrática.",
+                "b) Para que a Contratada não possa alegar desconhecimento.",
+                "c) Para compatibilizar as obrigações bilaterais e adotar medidas que permitam essa compatibilização.",
+                "d) Para substituir as anotações no Diário de Obras."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.14: 'Formalizar, sempre que possível, os entendimentos realizados com a Contratada ou seu preposto, adotando todas as medidas que permitam compatibilizar as obrigações bilaterais.'"
+        },
+        { // 115
+            enunciado: "115) A ICA 85-16 estabelece que a Contratada deve ter uma equipe técnica no local da obra para representá-la. Quem decide sobre a aceitação do nome indicado pela Contratada para essa função?",
+            alternativas: [
+                "a) A DIRINFRA.",
+                "b) O Conselho Regional de Engenharia (CREA).",
+                "c) O Contratante (Administração).",
+                "d) A Fiscalização do Contrato, exclusivamente."
+            ],
+            correta: 2,
+            justificativa: "Item 3.2.1: 'Caberá ao Contratante decidir sobre a aceitação do nome que for indicado, após a análise do currículo do mesmo'."
+        },
+        { // 116
+            enunciado: "116) No caso de serviço subempreitado, a ICA 85-16 exige que a Contratada apresente, por escrito, o profissional responsável pelos trabalhos adjudicados. Para que esse profissional deve estar credenciado?",
+            alternativas: [
+                "a) Para responder criminalmente por eventuais acidentes.",
+                "b) Para os entendimentos com a Fiscalização de Obras.",
+                "c) Para assinar a ART do serviço subempreitado.",
+                "d) Para representar a subcontratada em juízo."
+            ],
+            correta: 1,
+            justificativa: "Item 3.3.3: credenciado 'para os entendimentos com a Fiscalização de Obras'."
+        },
+        { // 117
+            enunciado: "117) A ICA 85-16, no item 5.4.26, atribui à Fiscalização da Obra a análise e opinião sobre pedidos de prorrogação de prazos e outras alterações. Qual o objetivo final desse trabalho da Fiscalização?",
+            alternativas: [
+                "a) Acelerar o processo decisório da Administração.",
+                "b) Substituir a necessidade de parecer jurídico.",
+                "c) Permitir uma decisão final por parte da Administração.",
+                "d) Garantir que a Contratada não seja prejudicada."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.26: análise deve ser feita 'de modo a permitir decisão final por parte da Administração.'"
+        },
+        { // 118
+            enunciado: "118) A Contratada deve manter no local da obra uma série de documentos organizados. Qual dos seguintes documentos NÃO está listado no item 5.4.28?",
+            alternativas: [
+                "a) Livro de ocorrências diárias (Diário de Obras).",
+                "b) Uma via do Contrato e documentos integrantes.",
+                "c) O comprovante de regularidade fiscal da matriz da empresa.",
+                "d) Conjunto completo de desenhos e especificações."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.28 lista o DO, o contrato e os projetos, mas não menciona o comprovante de regularidade fiscal da matriz, que é um documento corporativo e não específico da obra."
+        },
+        { // 119
+            enunciado: "119) Sobre a 'Consulta Técnica Contratada', a ICA 85-16 estabelece que seus serviços e pareceres podem ser contratados para responder a questões propostas. Em que circunstância isso é especialmente recomendado?",
+            alternativas: [
+                "a) Quando a Contratada discorda do projeto.",
+                "b) Quando a Administração não dispõe de elementos especializados ou surgem dúvidas na análise.",
+                "c) Quando a obra está atrasada e precisa de um 'gás' de produtividade.",
+                "d) Quando a Fiscalização da Obra deseja delegar suas funções de análise."
+            ],
+            correta: 1,
+            justificativa: "Item 5.3.1: 'Sempre que a Administração não dispuser de elementos especializados... ou surgirem dúvidas na sua análise, poderão ser contratados serviços e pareceres de empresas ou profissionais especializados'."
+        },
+        { // 120
+            enunciado: "120) A ICA 85-16 menciona que a Fiscalização da Obra deve exigir que a Contratada mantenha certos documentos no canteiro. O 'Diário de Obras' é um deles. Qual a denominação completa e a função desse livro?",
+            alternativas: [
+                "a) Livro de Registro de Pessoal, para controle de frequência.",
+                "b) Livro de Ordem, para registrar as ordens da Administração.",
+                "c) Livro de ocorrências diárias, para anotar todas as ocorrências relacionadas à obra.",
+                "d) Livro de Medições, para controle dos serviços executados."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.28, alínea 'a', define como 'livro de ocorrências diárias, denominado 'Diário de Obras' (DO)', cuja função é o registro diário de tudo que é pertinente à obra."
+        },
+        { // 121
+            enunciado: "121) A Portaria de Designação da Comissão de Fiscalização da Obra (Anexo B) e a da Comissão de Recebimento Definitivo (Anexo I) devem ser publicadas. A publicação no BCA (Boletim do Comando da Aeronáutica) é necessária em qual situação?",
+            alternativas: [
+                "a) Em todas as designações, sem exceção.",
+                "b) Apenas para as Comissões de Recebimento.",
+                "c) Quando a comissão contiver membros de unidades distintas.",
+                "d) Apenas para obras de grande vulto, acima de um certo valor."
+            ],
+            correta: 2,
+            justificativa: "Item 5.1.4 menciona a publicação no BCA 'caso a comissão contenha membros de unidades distintas'. O mesmo se aplica à lógica para a comissão de recebimento."
+        },
+        { // 122
+            enunciado: "122) A ICA 85-16 estabelece que a Contratada é responsável por manter 'Seguro de Acidentes do Trabalho' para seus empregados. Qual a abrangência da responsabilidade da Contratada em relação a acidentes, conforme o item 6.3.7?",
+            alternativas: [
+                "a) Apenas acidentes com seus próprios empregados no canteiro de obras.",
+                "b) Acidentes com seu pessoal, material, instalações, equipamentos e com terceiros.",
+                "c) Apenas acidentes fatais, que exigem indenizações maiores.",
+                "d) Acidentes que resultem em danos materiais à Administração."
+            ],
+            correta: 1,
+            justificativa: "Item 6.3.7: a Contratada responderá 'por qualquer acidente ocorrido com o pessoal, material, instalações, equipamentos sob sua responsabilidade, bem como com terceiros'."
+        },
+        { // 123
+            enunciado: "123) Em relação às medidas de proteção coletiva (EPC), como andaimes e guarda-corpos, a ICA 85-16 estabelece que:",
+            alternativas: [
+                "a) A Administração deve fornecê-los, pois a segurança é responsabilidade dela.",
+                "b) A Contratada deve tomar as providências necessárias, sem ônus para o Contratante.",
+                "c) Os custos com EPC são compartilhados entre Contratada e Administração.",
+                "d) A Fiscalização da Obra deve projetar e especificar os EPCs necessários."
+            ],
+            correta: 1,
+            justificativa: "Item 6.3.4: 'Compete à Contratada tomar as providências quanto as medidas de proteção coletivas (EPC) que forem necessárias, sem ônus para o Contratante'."
+        },
+        { // 124
+            enunciado: "124) A ICA 85-16 estabelece que a Fiscalização da Obra pode exigir a colocação de sinais convencionais. Qual a finalidade desses sinais?",
+            alternativas: [
+                "a) Identificar a empresa responsável pela obra.",
+                "b) Segurança de veículos e de pedestres.",
+                "c) Delimitar a área de estacionamento da Contratada.",
+                "d) Indicar os locais de estoque de materiais."
+            ],
+            correta: 1,
+            justificativa: "Item 6.3.5: 'A Fiscalização da Obra poderá exigir da Contratada a colocação de sinais convencionais que julgar necessários para a segurança de veículos e de pedestres.'"
+        },
+        { // 125
+            enunciado: "125) A Contratada deve planejar as instalações provisórias do canteiro de obras. Esse planejamento deve estar de acordo com vários programas e normas. Qual dos seguintes NÃO é mencionado no item 6.2.1?",
+            alternativas: [
+                "a) Programa de Condições e Meio Ambiente de Trabalho na Indústria da Construção (PCMAT).",
+                "b) Programa de Controle Médico em Saúde Ocupacional (PCMSO).",
+                "c) Programa de Prevenção de Riscos Ambientais (PPRA).",
+                "d) Programa de Gestão de Logística Sustentável (PLS)."
+            ],
+            correta: 3,
+            justificativa: "Item 6.2.1 lista o PCMAT, o PCMSO articulado com o PPRA, e a NR 18. O PLS (Plano de Logística Sustentável) é um instrumento de gestão da Administração, não mencionado como requisito para o planejamento do canteiro pela Contratada neste item."
+        },
+        { // 126
+            enunciado: "126) A ICA 85-16, no item 5.4.23, estabelece que a Fiscalização da Obra deve proceder da mesma forma que para a Contratada (corrigir/refazer) em relação às Assessorias Técnicas ou de Fiscalização. A que se refere essa obrigação?",
+            alternativas: [
+                "a) A erros nos projetos fornecidos pela Administração.",
+                "b) A erros ou omissões nos pareceres, exames, medições e relatórios produzidos pelas assessorias.",
+                "c) A falhas na execução dos serviços de subempreiteiras.",
+                "d) A atrasos na entrega de materiais."
+            ],
+            correta: 1,
+            justificativa: "Item 5.4.23: 'Proceder da mesma forma do item anterior, em relação às Assessorias Técnicas ou de Fiscalização, com referências aos erros ou omissões nos pareceres, exames, medições, avaliações, testes, ensaios, relatórios, métodos de acompanhamento e outros.'"
+        },
+        { // 127
+            enunciado: "127) O item 5.4.25 da ICA 85-16 estabelece que a Fiscalização da Obra deve aprovar, previamente, o plano de execução apresentado pela Contratada. O que esse plano deve conter?",
+            alternativas: [
+                "a) Apenas o cronograma financeiro detalhado.",
+                "b) A lista completa dos funcionários terceirizados.",
+                "c) Todos os processos e métodos de trabalho.",
+                "d) O projeto 'as built' da obra."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.25: 'Aprovar, previamente, o plano de execução das obras e serviços de engenharia, apresentado pela Empresa Contratada, que deverá conter todos os processos e métodos de trabalho.'"
+        },
+        { // 128
+            enunciado: "128) Quando a Contratada não cumpre as cláusulas contratuais, a Fiscalização do Contrato tem o dever de:",
+            alternativas: [
+                "a) Aplicar as penalidades diretamente.",
+                "b) Comunicar ao Ordenador de Despesas, imediatamente e por escrito, as ocorrências que possam levar à aplicação de penalidades ou à rescisão do contrato.",
+                "c) Paralisar a obra e notificar a Contratada.",
+                "d) Substituir a Contratada por uma equipe própria."
+            ],
+            correta: 1,
+            justificativa: "Item 4.2.2: 'Comunicar ao Ordenador de Despesas, imediatamente e por escrito, ocorrências que possam levar à aplicação de penalidades à Contratada ou à rescisão do contrato.'"
+        },
+        { // 129
+            enunciado: "129) A ICA 85-16 menciona que a Fiscalização do Contrato deve relatar ao Ordenador de Despesas qualquer ocorrência ou circunstância que possa acarretar dificuldades no desenvolvimento das obras ou:",
+            alternativas: [
+                "a) Atraso na entrega de materiais.",
+                "b) Inconveniências a terceiros.",
+                "c) Aumento no custo da mão de obra.",
+                "d) Necessidade de substituição do engenheiro residente."
+            ],
+            correta: 1,
+            justificativa: "Item 4.2.3: 'Relatar... qualquer ocorrência ou circunstância que possa acarretar dificuldades no desenvolvimento das obras ou inconveniências a terceiros.'"
+        },
+        { // 130
+            enunciado: "130) A ICA 85-16, ao tratar das especificações para a Contratada, menciona a necessidade de obtenção de alvarás. Qual alvará, além do de construção, pode ser necessário, dependendo do tipo de serviço?",
+            alternativas: [
+                "a) Alvará de Licença Ambiental.",
+                "b) Alvará de Demolição.",
+                "c) Alvará de Funcionamento da empresa.",
+                "d) Alvará Sanitário."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.9: 'Obter junto à Prefeitura Municipal o alvará de construção e, se necessário, o alvará de demolição'."
+        },
+        { // 131
+            enunciado: "131) A ICA 85-16 determina que a Contratada deve apresentar à Fiscalização da Obra, antes da utilização, o prazo de validade dos materiais perecíveis. Qual a principal razão para essa exigência?",
+            alternativas: [
+                "a) Para que a Fiscalização possa programar a data de uso do material.",
+                "b) Para que a Administração possa negociar descontos com o fornecedor.",
+                "c) Para garantir que materiais vencidos não sejam aplicados na obra.",
+                "d) Para que a Contratada possa planejar a compra de novos materiais."
+            ],
+            correta: 2,
+            justificativa: "A lógica é o controle de qualidade, evitando a aplicação de materiais com prazo de validade expirado, o que comprometeria a obra."
+        },
+        { // 132
+            enunciado: "132) A ICA 85-16 estabelece que a Contratada é responsável pela execução de todas as obras e serviços descritos. O que ela deve fornecer para isso, além de mão de obra e equipamentos?",
+            alternativas: [
+                "a) Apenas os materiais.",
+                "b) Todos os materiais, mão de obra e equipamentos necessários.",
+                "c) Os materiais, sendo a mão de obra fornecida pela Administração.",
+                "d) A supervisão técnica, cabendo à Administração o fornecimento de materiais e equipamentos."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.1: 'É obrigação da Contratada a execução de todas as obras e serviços de engenharia... fornecendo, para tanto, todos os materiais, mão de obra e equipamentos necessários'."
+        },
+        { // 133
+            enunciado: "133) Em relação às Leis Trabalhistas e da Previdência Social, qual é a obrigação da Contratada, conforme o item 3.1.2?",
+            alternativas: [
+                "a) Apenas cumpri-las, sem necessidade de comprovação.",
+                "b) Cumprir as prescrições e comprová-las documentalmente junto à Fiscalização do Contrato.",
+                "c) Apresentar à Fiscalização da Obra uma declaração de próprio punho atestando a regularidade.",
+                "d) Manter os documentos na sede da empresa, disponíveis para consulta, caso solicitado."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.2: 'O cumprimento das prescrições referentes às Leis Trabalhistas, da Previdência Social e sua comprovação documental junto à Fiscalização do Contrato.'"
+        },
+        { // 134
+            enunciado: "134) A ICA 85-16, no item 3.1.4, estabelece que a Contratada deve empregar os métodos de trabalho mais eficientes e seguros. Em conformidade com o que devem estar esses métodos?",
+            alternativas: [
+                "a) Com o cronograma da obra.",
+                "b) Com as normas a obedecer e especificações fornecidas.",
+                "c) Com a capacidade técnica da mão de obra disponível.",
+                "d) Com a tradição construtiva da região."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.4: '...empregará os métodos de trabalho mais eficientes e seguros, de acordo com as normas a obedecer e especificações fornecidas.'"
+        },
+        { // 135
+            enunciado: "135) A Contratada é responsável pela segurança nos trabalhos realizados. Essa responsabilidade inclui a salvaguarda de quê?",
+            alternativas: [
+                "a) Apenas dos funcionários da Contratada.",
+                "b) Das instalações existentes e do pessoal que circula na área de execução dos serviços.",
+                "c) Exclusivamente dos materiais e equipamentos da Contratada.",
+                "d) Das ferramentas manuais e equipamentos elétricos."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.3: 'A segurança nos trabalhos realizados, salvaguarda das instalações existentes e do pessoal que circula na área de execução dos serviços'."
+        },
+        { // 136
+            enunciado: "136) A ICA 85-16 menciona que a Contratada é responsável pela demolição ou reconstrução dos trabalhos rejeitados. Por quem esses trabalhos são rejeitados?",
+            alternativas: [
+                "a) Pelo engenheiro responsável da Contratada.",
+                "b) Pela Fiscalização da Obra.",
+                "c) Pela Comissão de Recebimento.",
+                "d) Pelo Corpo de Bombeiros."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.3 menciona '...reconstrução dos trabalhos rejeitados pela Fiscalização da Obra.'"
+        },
+        { // 137
+            enunciado: "137) A ICA 85-16, ao tratar da documentação, determina que toda documentação relativa à obra deve, obrigatoriamente, fazer parte de qual processo?",
+            alternativas: [
+                "a) Do processo de licitação.",
+                "b) Do processo de pagamento.",
+                "c) Do Processo Administrativo de Gestão (PAG) da mesma.",
+                "d) Do processo de Tomada de Contas."
+            ],
+            correta: 2,
+            justificativa: "Item 10.3: 'Toda documentação relativa à obra... deverá, obrigatoriamente, fazer parte do PAG da mesma.'"
+        },
+        { // 138
+            enunciado: "138) A ICA 85-16 faz referência à Lei nº 8.666/93 em diversos momentos. Qual a importância dessa lei para o contexto da instrução?",
+            alternativas: [
+                "a) Ela define os limites de responsabilidade civil do engenheiro.",
+                "b) Ela regulamenta as normas técnicas para construção civil.",
+                "c) Ela institui normas para licitações e contratos da Administração Pública.",
+                "d) Ela estabelece o Código de Defesa do Consumidor para obras públicas."
+            ],
+            correta: 2,
+            justificativa: "A ementa da Lei 8.666/93, citada nas referências da ICA, é 'Regulamenta o Artigo 37, Inciso XXI, da Constituição Federal, institui normas para licitações e contratos da Administração Pública'."
+        },
+        { // 139
+            enunciado: "139) A ICA 85-16 foi aprovada por uma Portaria da DIRINFRA. Em qual veículo de divulgação do Comando da Aeronáutica essa portaria foi publicada?",
+            alternativas: [
+                "a) Diário Oficial da União.",
+                "b) Jornal do Brasil.",
+                "c) Boletim do Comando da Aeronáutica (BCA).",
+                "d) Informativo DIRINFRA."
+            ],
+            correta: 2,
+            justificativa: "A página 3 da ICA informa que a Portaria DIRINFRA nº 92 foi 'Publicada no BCA nº 148, de 28 de agosto de 2017'."
+        },
+        { // 140
+            enunciado: "140) As disposições da ICA 85-16 se aplicam a outras formas de pactuação além dos contratos. A qual dos seguintes instrumentos a instrução também se aplica, no que couber?",
+            alternativas: [
+                "a) Acordos de acionistas.",
+                "b) Contratos de trabalho CLT.",
+                "c) Termos de convênio e termos de cooperação.",
+                "d) Contratos de aluguel de imóveis residenciais."
+            ],
+            correta: 2,
+            justificativa: "Item 10.1: 'Aplicam-se, as disposições desta Instrução, no que couber, aos termos de convênio, termos de cooperação, acordos, ajustes, protocolos e demais atos de natureza contratual'."
+        },
+        { // 141
+            enunciado: "141) A ICA 85-16 cita o art. 618 do Código Civil. Qual o prazo de decadência para o dono da obra propor ação contra o empreiteiro por vícios ou defeitos, contado do aparecimento do vício?",
+            alternativas: [
+                "a) 90 dias.",
+                "b) 180 dias.",
+                "c) 1 ano.",
+                "d) 5 anos."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.17 menciona o parágrafo único do art. 618: 'decairá do direito assegurado o dono da obra que não propuser a ação contra o empreiteiro, nos cento e oitenta dias seguintes ao aparecimento do vício ou defeito.'"
+        },
+        { // 142
+            enunciado: "142) A ICA 85-16 estabelece, no item 5.5.1, que a Comissão de Fiscalização da Obra deve franquear acesso à documentação à DIRINFRA. Em que circunstância isso deve ocorrer?",
+            alternativas: [
+                "a) Mensalmente, por ocasião do envio do RMO.",
+                "b) Sempre que a DIRINFRA solicitar, por meio de ofício.",
+                "c) Em eventuais visitas de inspeção.",
+                "d) Apenas após a conclusão da obra."
+            ],
+            correta: 2,
+            justificativa: "Item 5.5.1: 'A Comissão de Fiscalização da Obra deverá franquear à DIRINFRA... acesso a toda a documentação relativa à obra ou serviço de engenharia, em eventuais visitas de inspeção.'"
+        },
+        { // 143
+            enunciado: "143) A presença da Fiscalização da Obra durante a execução dos serviços implica em solidariedade ou corresponsabilidade com a Contratada?",
+            alternativas: [
+                "a) Sim, a fiscalização é corresponsável pela boa execução.",
+                "b) Sim, mas apenas pelos aspectos técnicos.",
+                "c) Não. A presença da fiscalização não implica solidariedade ou corresponsabilidade.",
+                "d) Depende do que estiver estabelecido no contrato."
+            ],
+            correta: 2,
+            justificativa: "Item 5.5.2: 'A presença da Fiscalização da Obra... não implicará solidariedade ou corresponsabilidade com a Contratada, que responderá única e integralmente pela execução dos serviços'."
+        },
+        { // 144
+            enunciado: "144) A ICA 85-16, no item 5.4.16, atribui à Fiscalização da Obra a função de comparar os elementos físicos da execução com as especificações do contrato. Como essa comparação deve ser feita?",
+            alternativas: [
+                "a) Através de auditoria externa contratada para esse fim.",
+                "b) Mediante checagens amostrais de estoques ou utilização e existências efetivas.",
+                "c) Por meio de declaração da Contratada atestando a conformidade.",
+                "d) Através de levantamentos topográficos diários."
+            ],
+            correta: 1,
+            justificativa: "Item 5.4.16: 'Comparar os elementos físicos da execução (mediante checagens amostrais de estoques ou utilização e existências efetivas), com as especificações do objeto do contrato.'"
+        },
+        { // 145
+            enunciado: "145) A ICA 85-16 menciona a possibilidade de propor acréscimo ou supressão nas obras e serviços. Qual legislação e artigo são citados como base para essa ação?",
+            alternativas: [
+                "a) Lei 8.666/93, art. 65, § 1º.",
+                "b) Código Civil, art. 618.",
+                "c) Lei 8.078/90 (CDC), art. 12.",
+                "d) Decreto Federal n.º 356/91, art. 83."
+            ],
+            correta: 0,
+            justificativa: "Item 5.4.17: 'Propor acréscimo ou supressão nas obras e serviços de engenharia, observando as condições estabelecidas pelo § 1º do art. 65 da Lei nº 8.666, de 1993.'"
+        },
+        { // 146
+            enunciado: "146) A quem compete, segundo a ICA 85-16, autorizar, quando houver necessidade, a retirada ou transferência de materiais, máquinas e equipamentos do local da obra?",
+            alternativas: [
+                "a) À DIRINFRA.",
+                "b) Ao Fiscal do Contrato.",
+                "c) À Fiscalização da Obra.",
+                "d) Ao Ordenador de Despesas."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.20: 'Autorizar, quando houver necessidade, a retirada ou transferência de materiais, máquinas e equipamentos do local da obra e dar pronto conhecimento do fato ao Fiscal do Contrato.'"
+        },
+        { // 147
+            enunciado: "147) A ICA 85-16 estabelece que a Fiscalização da Obra deve conferir os dados das faturas antes de atestá-las. Após a conferência e correção, o que deve ser feito com as cópias?",
+            alternativas: [
+                "a) Enviadas à Contratada.",
+                "b) Arquivadas junto aos demais documentos pertinentes.",
+                "c) Enviadas à DIRINFRA para controle.",
+                "d) Devolvidas ao setor financeiro para pagamento."
+            ],
+            correta: 1,
+            justificativa: "Item 5.4.18: 'Conferir os dados das faturas antes de atestá-las, promover as correções devidas e arquivar as cópias junto aos demais documentos pertinentes.'"
+        },
+        { // 148
+            enunciado: "148) A ICA 85-16 menciona, no item 5.4.15, que a Fiscalização da Obra deve verificar in loco se a Contratada cumpriu as cláusulas contratuais. Em relação a qual Lei essa verificação deve ser feita fundamentalmente?",
+            alternativas: [
+                "a) Lei do Sistema de Engenharia (NSCA 85-1).",
+                "b) Lei de Introdução às Normas do Direito Brasileiro.",
+                "c) Lei nº 8.666, de 1993 e suas alterações.",
+                "d) Código de Processo Civil."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.15: 'Verificar in loco... fundamentalmente, quanto à inarredável observância aos princípios e preceitos consubstanciados na Lei nº 8.666, de 1993 e suas alterações.'"
+        },
+        { // 149
+            enunciado: "149) O que a ICA 85-16 estabelece sobre a publicação do TERD?",
+            alternativas: [
+                "a) Deve ser publicado no Diário Oficial da União.",
+                "b) Deve ser publicado no Boletim do Comando da Aeronáutica.",
+                "c) Deve ser publicado no Boletim Interno da Administração.",
+                "d) Não necessita de publicação, apenas de arquivamento no processo."
+            ],
+            correta: 2,
+            justificativa: "Item 9.2.17: após assinado, o TERD deve ser apresentado à Administração 'que, após examiná-lo, publicá-lo-á no seu Boletim Interno'."
+        },
+        { // 150
+            enunciado: "150) A ICA 85-16 estabelece que, após a lavratura do TERP, a obra ficará em observação durante o prazo de verificação e recebimento. O que acontece se as deficiências apontadas no TERP persistirem após esse prazo?",
+            alternativas: [
+                "a) A obra é automaticamente recebida em caráter definitivo.",
+                "b) A Contratada poderá ser enquadrada nas penalidades previstas no contrato.",
+                "c) Um novo prazo de verificação é automaticamente concedido.",
+                "d) A Administração assume a responsabilidade pela correção das falhas."
+            ],
+            correta: 1,
+            justificativa: "O modelo do TERP (Anexo J) afirma: 'Caso as deficiências persistam, a Contratada poderá ser enquadrada nas penalidades previstas no contrato.'"
+        }
+    ];
+
+    // ---------- estado interno ----------
+    let respostasUsuario = new Array(questoes.length).fill(null);
+    let respostasConfirmadas = new Array(questoes.length).fill(false);
+
+    // elementos da página
+    const capa = document.getElementById('capa');
+    const conteudo = document.getElementById('conteudoProva');
+    const btnIniciar = document.getElementById('btnIniciar');
+    const container = document.getElementById('questoesContainer');
+    const notaSpan = document.getElementById('notaExibida');
+    const acertosSpan = document.getElementById('acertosStatus');
+    const errosSpan = document.getElementById('errosStatus');
+    const limparBtn = document.getElementById('limparRespostas');
+    const imprimirBtn = document.getElementById('btnImprimir');
+
+    btnIniciar.addEventListener('click', ()=>{
+        capa.style.display = 'none';
+        conteudo.style.display = 'block';
+        renderQuestoes();
+        atualizaPlacar();
+    });
+
+    function renderQuestoes() {
+        let html = '';
+        for (let i = 0; i < questoes.length; i++) {
+            const q = questoes[i];
+            const selecionada = respostasUsuario[i];
+            const confirmada = respostasConfirmadas[i];
+            const letras = ['A','B','C','D'];
+
+            html += `<div class="questao-item" id="q-${i}">`;
+            html += `<div class="enunciado">${q.enunciado}</div>`;
+            html += `<div class="alternativas">`;
+
+            for (let altIdx = 0; altIdx < q.alternativas.length; altIdx++) {
+                let classe = 'alternativa';
+                if (selecionada === altIdx && confirmada) {
+                    classe += (altIdx === q.correta) ? ' certa' : ' errada';
+                } else if (selecionada === altIdx && !confirmada) {
+                    classe += ' selecionada';
+                }
+
+                const disabledAttr = confirmada ? ' style="pointer-events:none; opacity:0.8;"' : '';
+
+                html += `<div class="${classe}" data-q="${i}" data-alt="${altIdx}" ${confirmada ? 'data-respondida="true"' : ''}>`;
+                html += `<span class="letra">${letras[altIdx]}</span>`;
+                html += `<span>${q.alternativas[altIdx]}</span>`;
+                html += `</div>`;
+            }
+
+            html += `</div>`; // fecha alternativas
+
+            if (confirmada && selecionada !== null) {
+                html += `<div class="justificativa">✅ <strong>Justificativa:</strong> ${q.justificativa}</div>`;
+            }
+
+            html += `</div>`; // fecha questao-item
+        }
+        container.innerHTML = html;
+
+        // eventos para alternativas não respondidas
+        document.querySelectorAll('.alternativa:not([data-respondida="true"])').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const target = e.currentTarget;
+                const qIdx = parseInt(target.dataset.q);
+                const altIdx = parseInt(target.dataset.alt);
+                if (respostasConfirmadas[qIdx]) return;
+
+                // desmarca outras da mesma questão
+                document.querySelectorAll(`[data-q="${qIdx}"]`).forEach(irmao => irmao.classList.remove('selecionada'));
+                target.classList.add('selecionada');
+                respostasUsuario[qIdx] = altIdx;
+            });
+
+            // duplo clique confirma
+            el.addEventListener('dblclick', (e) => {
+                const target = e.currentTarget;
+                const qIdx = parseInt(target.dataset.q);
+                if (respostasConfirmadas[qIdx]) return;
+                const altIdx = parseInt(target.dataset.alt);
+                if (respostasUsuario[qIdx] !== altIdx) return; // só confirma a selecionada
+
+                respostasConfirmadas[qIdx] = true;
+                respostasUsuario[qIdx] = altIdx;
+                renderQuestoes();
+                atualizaPlacar();
+            });
+        });
+
+        // bloqueia cliques em já respondidas
+        document.querySelectorAll('.alternativa[data-respondida="true"]').forEach(el => {
+            el.style.pointerEvents = 'none';
+        });
+    }
+
+    function atualizaPlacar() {
+        let acertos = 0;
+        for (let i = 0; i < questoes.length; i++) {
+            if (respostasConfirmadas[i] && respostasUsuario[i] === questoes[i].correta) acertos++;
+        }
+        const erros = respostasConfirmadas.filter((v,i) => v && respostasUsuario[i] !== questoes[i].correta).length;
+        const nota = (acertos / questoes.length) * 10;
+        notaSpan.innerText = nota.toFixed(2);
+        acertosSpan.innerText = `Acertos: ${acertos} / 50 (${((acertos/50)*100).toFixed(1)}%)`;
+        errosSpan.innerText = `Erros: ${erros}`;
+    }
+
+    limparBtn.addEventListener('click', ()=>{
+        respostasUsuario = new Array(questoes.length).fill(null);
+        respostasConfirmadas = new Array(questoes.length).fill(false);
+        renderQuestoes();
+        atualizaPlacar();
+    });
+
+    imprimirBtn.addEventListener('click', ()=>{
+        window.print();
+    });
+
+})();
+</script>
+</body>
+</html>

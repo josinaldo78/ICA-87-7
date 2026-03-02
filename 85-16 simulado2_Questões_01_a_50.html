@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAOF 2025 – ICA 85-16 (Questões 1-50)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        /* capa */
+        .capa {
+            background: #0a1a3a;
+            color: white;
+            text-align: center;
+            padding: 50px 30px;
+            border-bottom: 5px solid #ffaa00;
+        }
+        .capa h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .capa h2 {
+            font-weight: normal;
+            font-size: 1.6em;
+            margin-bottom: 30px;
+        }
+        .capa p {
+            font-size: 1.1em;
+            margin: 15px 0;
+            opacity: 0.9;
+        }
+        .capa .destaque {
+            background: #ffaa00;
+            color: #0a1a3a;
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 30px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .capa .destaque:hover {
+            background: #ffc34d;
+            transform: scale(1.02);
+        }
+        .btn-iniciar {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 30px 0 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+        .btn-iniciar:hover {
+            background: #27ae60;
+        }
+        /* cabeçalho do questionário (inicialmente oculto) */
+        .questionario-header {
+            background: #0a1a3a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+        .questionario-header h2 {
+            margin: 0;
+        }
+        .controle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e9ecef;
+            padding: 12px 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn {
+            background: #0a1a3a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .btn:hover {
+            background: #1e3a6a;
+        }
+        .btn-imprimir {
+            background: #27ae60;
+        }
+        .btn-imprimir:hover {
+            background: #2ecc71;
+        }
+        .resultado {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0a1a3a;
+        }
+        .questoes-area {
+            padding: 20px;
+            background: white;
+            display: none;
+        }
+        .questao-card {
+            background: #f9f9f9;
+            border-left: 6px solid #0a1a3a;
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .questao-num {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #0a1a3a;
+            margin-bottom: 10px;
+        }
+        .questao-enunciado {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .alternativa {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .alternativa:hover {
+            background: #eef2ff;
+            border-color: #0a1a3a;
+        }
+        .alternativa input {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+        .alternativa label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.98em;
+            line-height: 1.5;
+        }
+        .justificativa {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            border-left: 4px solid #0a1a3a;
+            font-size: 0.95em;
+            display: none;
+        }
+        .justificativa strong {
+            color: #0a1a3a;
+        }
+        .footer-questao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        .resultado-item {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorreto {
+            color: #c0392b;
+        }
+        .nota-final {
+            background: #0a1a3a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            border-radius: 10px;
+            margin: 30px 0 20px;
+        }
+        .rodape {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        @media print {
+            body { background: white; }
+            .capa, .controle, .btn, .nota-final, .rodape { display: none !important; }
+            .questionario-header, .questoes-area { display: block !important; }
+            .questao-card { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <!-- CAPA -->
+    <div class="capa" id="capa">
+        <h1>🇧🇷EAOF 2026<p>ICA 85-16 SIMULADO 2<p>PARTE I</h1>
+    
+        <p>SERVIÇOS DE ENGENHARIA</p>
+        <p style="font-size:1.3em; margin:30px 0;"><br>FISCALIZAÇÃO E RECEBIMENTO DE OBRAS E SERVIÇOS DE ENGENHARIA</p>
+        <p>QUESTÕES INÉDITAS de 01 a 50 (ESTILO EAOF)</p>
+        <p style="margin-top:30px;"><em>elaborado com base no documento original do COMANDO DA AERONÁUTICA</em></p>
+        <div class="destaque" onclick="iniciarProva()">ACESSAR PROVA →</div>
+        <p style="margin-top:20px; font-size:0.9rem;">© 2025 – questões modelo EAOF / justificativas após resposta</p>
+    </div>
+
+    <!-- CABEÇALHO INTERNO (oculto até iniciar) -->
+    <div class="questionario-header" id="header">
+        <h2>ICA 85-16 · Questões 1 a 50</h2>
+    </div>
+
+    <!-- BARRA DE CONTROLE (aparece após início) -->
+    <div class="controle" id="controle" style="display:none;">
+        <button class="btn" id="corrigirBtn" onclick="corrigirTodas()">✅ CORRIGIR PROVA</button>
+        <span class="resultado" id="percentual">0% acertos</span>
+        <button class="btn btn-imprimir" onclick="window.print()">🖨️ IMPRIMIR</button>
+    </div>
+
+    <!-- ÁREA DAS QUESTÕES 1 a 50 -->
+    <div class="questoes-area" id="questoesArea">
+        <!-- as questões serão injetadas via js a partir do array questoes -->
+    </div>
+
+    <div id="notaFinal" class="nota-final" style="display:none;"></div>
+    <div class="rodape" id="rodape" style="display:none;">EAOF 2025 – Serviços de Engenharia | ICA 85-16</div>
+</div>
+
+<script>
+    // --------------------- DADOS DAS QUESTÕES 1 a 50 (exatamente como gerado) -----------------
+    const questoes = [
+        { //1
+            enunciado: "De acordo com a ICA 85-16, a Comissão de Fiscalização da Obra será designada em Portaria assinada pela autoridade competente, publicada em boletim interno da Administração e, ainda, no Boletim do Comando da Aeronáutica – BCA. Acerca da composição da Comissão de Fiscalização da Obra ou Serviço de Engenharia, é correto afirmar que:",
+            alternativas: [
+                "a) A comissão será composta por, no mínimo, dois membros, sendo o Presidente, obrigatoriamente, um oficial ou civil assemelhado.",
+                "b) O Fiscal da Obra, membro técnico da comissão, deverá ser um agente da Administração com formação de nível superior em Engenharia ou Arquitetura, ou com formação de nível médio em Tecnologia, desde que habilitado.",
+                "c) É permitida a designação de um engenheiro de diferente especialização, que não seja engenharia civil ou de infraestrutura, como Presidente da Comissão de Fiscalização para obras de infraestrutura, desde que justificado.",
+                "d) A presença do diploma de conclusão do Curso de Fiscalização, Acompanhamento e Controle de Contratos – Módulo Obras (CFACC-MO) é condição imprescindível e obrigatória para a nomeação do Fiscal de Obra, não sendo possível sua nomeação sem este certificado."
+            ],
+            correta: 1, //b (índice 1)
+            justificativa: "A alternativa b está correta, conforme item 5.1.1 da ICA 85-16, que define que o Fiscal da Obra deve ser um agente da Administração com formação de nível superior (Engenharia ou Arquitetura) ou nível médio em Tecnologia, compatível e habilitado. A alternativa a está incorreta, pois o item 5.1.1 estabelece um mínimo de três membros. A alternativa c é vedada pelo item 5.1.1. A alternativa d é incorreta, pois o item 5.1.1.2 afirma que a falta do diploma não impede a nomeação, mas a Administração deve incluir sua indicação ao curso no planejamento."
+        },
+        { //2
+            enunciado: "Considerando a sistemática de recebimento de obras e serviços de engenharia prevista na ICA 85-16, analise as situações que podem ocorrer com relação à verificação e recebimento provisório. I. Na situação de 'Obra Integralmente Conforme', inexistem exigências, podendo ser lavrado o Termo de Recebimento Provisório (TERP) e determinado o Prazo de Verificação e Recebimento para testes finais. II. Na 'Obra Quase Conforme', existem deficiências de pequena monta que invalidam o aceite e o Recebimento Provisório, sendo necessária a correção prévia para lavratura do TERP. III. Na 'Obra Não Conforme', a qualidade e quantidade não estão de acordo com o contrato, sendo a obra considerada inaceitável. Neste caso, o TERP não poderá ser lavrado. Está(ão) correta(s) apenas a(s) assertiva(s):",
+            alternativas: [
+                "a) I e II.",
+                "b) I e III.",
+                "c) II.",
+                "d) III."
+            ],
+            correta: 1, //b (índice 1)
+            justificativa: "A alternativa b está correta. O item 9.2.8 define as três situações: I está correta (alínea a); II está incorreta, pois na 'Obra Quase Conforme' as deficiências de pequena monta não invalidam o aceite e o TERP poderá ser lavrado com o registro das deficiências (alínea b); III está correta (alínea c)."
+        },
+        { //3
+            enunciado: "De acordo com a ICA 85-16, a Contratada possui uma série de atribuições e responsabilidades antes, durante e após a execução da obra ou serviço de engenharia. Sobre essas obrigações, informe verdadeiro (V) ou falso (F) para as assertivas abaixo e, em seguida, marque a opção que apresenta a sequência correta. ( ) A responsabilidade da Contratada pela estabilidade, qualidade e segurança da obra subsiste mesmo após a expedição do Termo de Recebimento Definitivo (TERD), na forma da lei. ( ) Compete à Contratada providenciar as ligações definitivas das utilidades previstas no projeto, como água, energia elétrica e telefone, sem ônus para a Administração. ( ) O pagamento de todos os impostos, taxas e demais obrigações fiscais incidentes sobre o objeto do contrato é de responsabilidade da Administração até o Recebimento Definitivo. ( ) A Contratada deverá apresentar à Fiscalização da Obra, antes de sua utilização, o prazo de validade dos materiais perecíveis.",
+            alternativas: [
+                "a) (V); (F); (V); (V).",
+                "b) (F); (V); (F); (V).",
+                "c) (V); (V); (F); (V).",
+                "d) (V); (V); (F); (F)."
+            ],
+            correta: 2, //c (índice 2)
+            justificativa: "A alternativa c está correta. A primeira assertiva é verdadeira, conforme item 3.1.16. A segunda é verdadeira, conforme itens 3.1.8 e 3.1.7 (sem ônus). A terceira é falsa, pois o item 3.1.14 estabelece que o pagamento de todos os impostos, taxas e obrigações fiscais é de responsabilidade da Contratada, não da Administração. A quarta é verdadeira, conforme item 7.3.4."
+        },
+        { //4
+            enunciado: "Preencha as lacunas abaixo, com base nas definições e procedimentos da ICA 85-16. A Fiscalização da Obra deverá preencher, regularmente, as folhas do Diário de Obras. Serão obrigatoriamente registradas informações como as condições meteorológicas, as falhas em serviços de terceiros, os acidentes e o registro de todo maquinário e equipamento que entre ou saia da obra. As despesas com a impressão e encadernação do Diário de Obras correrão por conta da _____. Deverá ser utilizada, no mínimo, 1 (uma) folha para cada dia de trabalho, ainda que a obra esteja paralisada, ocasião em que deverá ser lançada a expressão “_____”. A sequência de palavras que preenche corretamente as lacunas é:",
+            alternativas: [
+                "a) Administração / Obra em andamento normal.",
+                "b) Contratada / Não houve ocorrência / obra paralisada.",
+                "c) Contratante / Sem serviços programados.",
+                "d) Fiscalização / Aguardando liberação da contratante."
+            ],
+            correta: 1, //b (índice 1)
+            justificativa: "A alternativa b está correta, conforme itens 6.1.3 (as despesas correm por conta da Contratada) e 6.1.4 (deve ser lançada a expressão 'Não houve ocorrência / obra paralisada')."
+        },
+        { //5
+            enunciado: "Com base na ICA 85-16, assinale a opção correta sobre a substituição de materiais especificados em projeto.",
+            alternativas: [
+                "a) A Contratada pode substituir um material especificado por outro de qualidade superior, desde que não haja aumento de custo para a Administração, independentemente de autorização prévia.",
+                "b) Para a substituição de um material, a Contratada deve apresentar proposta por escrito com as razões do pedido, orçamento comparativo e provas de equivalência técnica do produto proposto.",
+                "c) A aprovação da substituição de material que envolva o aspecto estético da obra é de competência exclusiva da Administração, não necessitando de anuência da Fiscalização da Obra.",
+                "d) Tratando-se de material de maior custo, a substituição poderá ser autorizada pela Fiscalização da Obra, desde que a Contratada apresente justificativa técnica e o acréscimo de custo seja absorvido em medições futuras."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, pois sintetiza as exigências do item 7.4.1 para a substituição de materiais: apresentação de proposta por escrito com as razões, orçamento comparativo e provas de qualidade. A alternativa a é incorreta, pois a substituição depende de autorização da Fiscalização (7.4.1, alínea c). A alternativa c é incorreta, pois o item 7.4.2 estabelece que, além das exigências, o material deve se harmonizar com o acabamento restante, a critério da Fiscalização da Obra. A alternativa d é incorreta, pois a alínea 'a' do item 7.4.1 exige declaração da Contratada de que a substituição, no caso de material de maior custo, não acarretará ônus para a Administração."
+        },
+        { //6
+            enunciado: "De acordo com a ICA 85-16, sobre o recebimento de obras e serviços de engenharia, é incorreto afirmar que:",
+            alternativas: [
+                "a) O recebimento de uma obra ocorre em duas fases distintas: provisório e definitivo.",
+                "b) O Termo de Recebimento Provisório (TERP) deverá ser elaborado pelo Fiscal da Obra e assinado pelas partes em até 15 (quinze) dias consecutivos após a comunicação de conclusão pela Contratada.",
+                "c) O Termo de Recebimento Definitivo (TERD) será lavrado pela Comissão de Recebimento Definitivo, da qual podem participar membros que tenham atuado na Fiscalização da Obra para garantir a continuidade do processo.",
+                "d) O Recebimento Definitivo somente será efetivado após a apresentação pela Contratada da Certidão Negativa de Débito do INSS e do certificado de Recolhimento de FGTS."
+            ],
+            correta: 2, //c (a incorreta)
+            justificativa: "A alternativa c é a incorreta, portanto, é a resposta a ser marcada. O item 9.2.13 é explícito ao afirmar: 'Os membros da Comissão de Recebimento Definitivo não podem ter participado da Fiscalização da Obra do mesmo Instrumento Contratual.' As alternativas a, b e d estão corretas conforme os itens 9.2.4 e 9.2.7."
+        },
+        { //7
+            enunciado: "No contexto da ICA 85-16, sobre o Controle de Obras e Serviços de Engenharia, analise as assertivas sobre os procedimentos após a conclusão da obra. I. Concluída a obra, a Contratada deverá comunicar seu encerramento à Fiscalização da Obra, por escrito. II. Após a comunicação da Contratada, a Fiscalização da Obra deve verificar a conclusão e comunicar o fato ao Fiscal do Contrato, que por sua vez comunicará à Administração. III. Imediatamente após a conclusão, a Administração deve providenciar a constituição da Comissão de Recebimento Definitivo, que lavrará o TERD sem a necessidade de um período de observação. Estão corretas apenas as assertivas:",
+            alternativas: [
+                "a) I e II.",
+                "b) I e III.",
+                "c) II e III.",
+                "d) I, II e III."
+            ],
+            correta: 0, //a
+            justificativa: "A alternativa a está correta. As assertivas I e II estão de acordo com os itens 9.2.1 e 9.2.2. A assertiva III é incorreta, pois antes do TERD, há a fase de recebimento provisório (TERP) e o Prazo de Verificação e Recebimento, conforme itens 9.2.4 e 9.2.8."
+        },
+        { //8
+            enunciado: "A ICA 85-16 define as responsabilidades e obrigações da Contratada em relação a aprovações e licenças. Sobre este tema, é correto afirmar que:",
+            alternativas: [
+                "a) Compete à Administração, como contratante, providenciar o alvará de construção junto à Prefeitura Municipal e repassá-lo à Contratada para o início das obras.",
+                "b) A obtenção do 'Habite-se' ou Certificado de Conclusão junto à Prefeitura Municipal é uma responsabilidade compartilhada entre a Contratada e a Fiscalização da Obra.",
+                "c) A Contratada é responsável por providenciar a vistoria e aprovação de materiais e equipamentos por entidades como Corpo de Bombeiros e concessionárias, quando couber essa exigência, sem ônus para a Administração.",
+                "d) O licenciamento da execução dos serviços e obras junto ao INSS, por meio do Certificado de Matrícula, é de responsabilidade da Administração, cabendo à Contratada apenas a comprovação do pagamento das contribuições sociais."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta, conforme o item 3.1.7, que atribui à Contratada a responsabilidade de providenciar a vistoria e aprovação de materiais e equipamentos por entidades externas, sem ônus para a Administração. A alternativa a é incorreta, pois o item 3.1.9 atribui à Contratada a obtenção do alvará de construção. A alternativa b é incorreta, pois o item 3.1.8 atribui essa responsabilidade à Contratada. A alternativa d é incorreta, pois o item 3.1.10 atribui à Contratada a obtenção do Certificado de Matrícula no INSS."
+        },
+        { //9
+            enunciado: "Associe as colunas, relacionando os conceitos de projeto definidos na ICA 85-16 com as suas respectivas descrições. Conceitos (1) Projeto Básico (2) Projeto Executivo (3) Projeto 'As Built' (Como Construído). Descrições ( ) Conjunto dos elementos necessários e suficientes à execução completa da obra ou serviço de engenharia com nível máximo de detalhamento. ( ) Projeto retificado pela Contratada, após aprovação da Fiscalização, em função de alterações necessárias durante a execução. ( ) Conjunto de elementos necessários e suficientes para caracterizar a obra ou serviço, assegurando a viabilidade técnica e possibilitando a avaliação do custo. A sequência correta dessa associação é:",
+            alternativas: [
+                "a) (2); (3); (1).",
+                "b) (1); (2); (3).",
+                "c) (3); (1); (2).",
+                "d) (2); (1); (3)."
+            ],
+            correta: 0, //a
+            justificativa: "A alternativa a está correta. A sequência é baseada nas definições da ICA 85-16: (2) Projeto Executivo (item 1.3.12); (3) Projeto 'As Built' (item 1.3.11); (1) Projeto Básico (item 1.3.10)."
+        },
+        { //10
+            enunciado: "De acordo com a ICA 85-16, sobre as medidas de segurança a serem adotadas durante a execução da obra ou serviço de engenharia, é incorreto afirmar que:",
+            alternativas: [
+                "a) A execução da obra deverá ser realizada com a adoção de todas as medidas relativas à proteção dos trabalhadores, observadas as leis em vigor e os requisitos de segurança.",
+                "b) A Contratada fornecerá a seus funcionários todos os equipamentos de proteção individual (EPIs) exigidos pela NR 6, de conformidade com a natureza dos serviços.",
+                "c) A Fiscalização da Obra é a principal responsável pela manutenção da ordem e da segurança das áreas sob responsabilidade da Contratada, incluindo o serviço de vigilância no canteiro de obras.",
+                "d) Compete à Contratada tomar as providências quanto às medidas de proteção coletivas (EPCs) que forem necessárias, sem ônus para o Contratante."
+            ],
+            correta: 2, //c (incorreta)
+            justificativa: "A alternativa c é a incorreta, portanto, é a resposta. O item 6.2.6 estabelece que 'A Contratada será responsável pela manutenção da ordem e da segurança das áreas sob sua responsabilidade, mantendo serviço de vigilância no canteiro de obras'. As demais alternativas estão corretas conforme os itens 6.3.1, 6.3.3 e 6.3.4."
+        },
+        { //11
+            enunciado: "Sobre o recebimento de obras e serviços de engenharia, a ICA 85-16 estabelece a destinação das vias do Termo de Recebimento Definitivo (TERD). Marque a opção que apresenta corretamente uma dessas destinações.",
+            alternativas: [
+                "a) A 1ª via do TERD é destinada à Contratada, para que esta possa emitir a nota fiscal dos serviços executados.",
+                "b) A 2ª via do TERD é destinada ao Processo da Obra ou Serviço de Engenharia para arquivamento.",
+                "c) A 3ª via do TERD é destinada ao Elo do Sistema de Engenharia correspondente.",
+                "d) A 5ª via do TERD é destinada à Contratada."
+            ],
+            correta: 3, //d
+            justificativa: "A alternativa d está correta. O item 9.3.3 da ICA 85-16 define a destinação das 5 vias do TERD. Conforme o item: a) 1ª via: DIRINFRA; b) 2ª via: Elo do SISENG; c) 3ª via: Organização Responsável; d) 4ª via: Processo da Obra; e) 5ª via: Contratada."
+        },
+        { //12
+            enunciado: "Considerando as atribuições da Fiscalização da Obra previstas na ICA 85-16, informe verdadeiro (V) ou falso (F) para as assertivas abaixo. ( ) Compete à Fiscalização da Obra expedir a Ordem de Serviço (OS), autorizando a Contratada a iniciar as atividades. ( ) A Fiscalização da Obra deve rejeitar todo e qualquer material de má qualidade ou não especificado, estipulando prazo para sua retirada do canteiro. ( ) É prerrogativa da Fiscalização da Obra solicitar a substituição de qualquer funcionário da Contratada que dificulte a ação da fiscalização. ( ) Cabe à Fiscalização da Obra a elaboração do Relatório Mensal de Obra (RMO). A sequência correta é:",
+            alternativas: [
+                "a) (F); (V); (V); (V).",
+                "b) (V); (F); (V); (F).",
+                "c) (F); (V); (F); (F).",
+                "d) (V); (V); (F); (V)."
+            ],
+            correta: 0, //a
+            justificativa: "A alternativa a está correta. A primeira assertiva é falsa, pois o item 5.5.3 afirma que a expedição da OS é de competência exclusiva da Administração, não da Fiscalização da Obra. As demais assertivas são verdadeiras: rejeitar materiais inadequados (5.4.9), solicitar substituição de funcionário (5.4.4) e elaborar o RMO (5.4.21.1)."
+        },
+        { //13
+            enunciado: "De acordo com a ICA 85-16, sobre a utilização de subempreitadas, é correto afirmar que:",
+            alternativas: [
+                "a) A subempreitada total da obra é permitida, desde que a subcontratada seja aprovada pela Fiscalização do Contrato.",
+                "b) A Contratada pode subcontratar partes da obra sem autorização prévia, desde que comprove a idoneidade técnica do subempreiteiro posteriormente.",
+                "c) A Contratada é a única responsável perante o Contratante, mesmo quando subcontrata parte da obra, e deve supervisionar as atividades da subcontratada.",
+                "d) Em caso de subempreitada, o responsável pelos trabalhos subcontratados se reporta diretamente à Fiscalização de Obras, isentando a Contratada original de responsabilidades sobre essa parte."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta, conforme os itens 3.3.2 e 3.3.3.1, que estabelecem que a Contratada é a responsável perante o Contratante e deve supervisionar e coordenar as atividades da subcontratada. As demais alternativas são incorretas: a subempreitada total é vedada (3.3.2); a subcontratação depende de autorização prévia (3.3.2); e a Contratada não se isenta de responsabilidade (3.3.2)."
+        },
+        { //14
+            enunciado: "A ICA 85-16 estabelece regras para a composição da Comissão de Recebimento de Obras e Serviços de Engenharia. Sobre essa comissão, é correto afirmar que:",
+            alternativas: [
+                "a) A comissão será constituída por, no mínimo, 1 (um) Presidente e 1 (um) Membro, sendo o Presidente um oficial ou civil assemelhado.",
+                "b) O membro responsável pela conferência dos aspectos técnicos da obra deve, obrigatoriamente, possuir formação superior em Engenharia ou Arquitetura, legalmente habilitado.",
+                "c) É permitida a inclusão de graduados na Comissão de Recebimento, desde que possuam notória especialização na área da obra.",
+                "d) Caso a OM não disponha de profissionais para a comissão, ela deverá contratar uma empresa de consultoria especializada para compor a comissão."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme a alínea 'c' do item 9.1.1, que exige formação superior em Engenharia ou Arquitetura para os responsáveis pelos aspectos técnicos. A alternativa a é incorreta, pois o mínimo é 1 Presidente e 2 Membros (9.1.1). A alternativa c é incorreta, pois o item 9.1.2 veda a inclusão de graduados. A alternativa d é incorreta, pois o item 9.1.3 determina que a OM deve solicitar apoio ao Órgão Sistêmico do Sistema de Engenharia, não contratar externamente."
+        },
+        { //15
+            enunciado: "Leia o trecho retirado da ICA 85-16: 'A Contratada será responsável pela existência de todo e qualquer vício, irregularidade ou defeito resultantes da execução ou de materiais empregados, mesmo depois de recebida a obra ou serviço de engenharia e devolvida a caução, comprometendo-se a reparar, corrigir, remover, reconstruir ou substituir, às suas expensas.' Sobre os prazos de responsabilidade da Contratada mencionados no texto, a ICA 85-16 estabelece que:",
+            alternativas: [
+                "a) Os prazos referentes à responsabilidade da Contratada, previstos no Código Civil, serão contados a partir da data de lavratura do Termo de Recebimento Provisório de Obra – TERP.",
+                "b) A responsabilidade da Contratada pela solidez e segurança da obra, em contratos de empreitada de construções consideráveis, é de 10 (dez) anos, conforme o Código Civil.",
+                "c) Os prazos referentes à responsabilidade da Contratada, previstos no Código Civil, serão contados a partir da data de lavratura do Termo de Recebimento Definitivo de Obra – TERD.",
+                "d) A Contratada decai do direito de reclamar sobre vícios ou defeitos aparentes após 90 (noventa) dias do recebimento da obra."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta, conforme item 3.1.5, que afirma que os prazos de responsabilidade previstos no Código Civil serão contados a partir da data do TERD. A alternativa a é incorreta, pois a contagem é a partir do TERD. A alternativa b é incorreta, pois o item 3.1.17 menciona o prazo de 5 anos do art. 618 do Código Civil. A alternativa d é incorreta, pois o item 3.1.16.1 menciona o direito de enjeitar a coisa por vícios ocultos, e o item 3.1.17 menciona o prazo decadencial de 180 dias para propor ação após o aparecimento do vício, não 90 dias para reclamação de vícios aparentes."
+        },
+        { //16
+            enunciado: "Preencha as lacunas abaixo com base nas disposições da ICA 85-16 sobre o canteiro de obras. A Contratada deverá propor à Fiscalização da Obra o local onde pretende instalar o canteiro. Correrão exclusivamente por conta da _____ todas as despesas com a construção, manutenção e administração do canteiro. Junto a cada canteiro de obras deverá ser colocada uma placa, a partir do início do serviço, para identificação da obra em execução, conforme padrão do Manual de Uso da Marca do _____. A sequência de palavras que preenche corretamente as lacunas é:",
+            alternativas: [
+                "a) Administração / Governo Federal - Obras.",
+                "b) Contratada / Governo Federal - Obras.",
+                "c) Contratante / Comando da Aeronáutica.",
+                "d) Fiscalização / Ministério da Defesa."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 6.2.3 afirma que as despesas do canteiro correm por conta da Contratada. O item 6.2.8 determina que a placa deve seguir o padrão do Manual de Uso da Marca do Governo Federal - Obras."
+        },
+        { //17
+            enunciado: "De acordo com a ICA 85-16, no que tange à fiscalização e ao recebimento de obras, analise as afirmativas sobre o Diário de Obras. I. Caberá à Contratada preencher, regularmente, as folhas do Diário de Obras, com base no modelo constante do Anexo A. II. As folhas do Diário de Obras, após assinadas e numeradas, deverão ser encadernadas mensalmente, além das “Folhas de Rosto”, “Termo de Abertura” e “Termo de Encerramento”. III. Não é necessário preencher o Diário de Obras em dias que não houver atividades no canteiro de obra. Está(ão) correta(s) apenas a(s) afirmativa(s):",
+            alternativas: [
+                "a) I.",
+                "b) II.",
+                "c) II e III.",
+                "d) III."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. A afirmativa I é falsa, pois o item 6.1.1 estabelece que cabe à Fiscalização da Obra preencher o Diário de Obras. A afirmativa II é verdadeira, conforme item 6.1.2. A afirmativa III é falsa, pois o item 6.1.4 determina que deve ser utilizada uma folha para cada dia, ainda que a obra esteja paralisada, com a devida anotação."
+        },
+        { //18
+            enunciado: "Sobre as obrigações da Contratada relacionadas à mão de obra e segurança no trabalho, a ICA 85-16 estabelece que:",
+            alternativas: [
+                "a) A Contratada deve cumprir as prescrições das Leis Trabalhistas e da Previdência Social, mas sua comprovação documental é de responsabilidade exclusiva da Fiscalização do Contrato.",
+                "b) A apresentação do Programa de Condições e Meio Ambiente de Trabalho na Indústria da Construção (PCMAT) à Delegacia Regional do Trabalho é uma faculdade da Contratada, recomendada para obras de grande porte.",
+                "c) A Contratada é a única responsável por acidentes e danos que eventualmente causar a pessoas ou instalações durante a execução da obra, devendo providenciar os seguros exigidos em lei.",
+                "d) A responsabilidade pelo fornecimento de equipamentos de proteção individual (EPIs) aos funcionários é da Fiscalização da Obra, que deve fiscalizar seu uso correto."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta, conforme o item 3.1.13, que estabelece a Contratada como única responsável por acidentes e danos, devendo providenciar os seguros. As demais alternativas são incorretas: a comprovação documental é da Contratada junto à Fiscalização (3.1.2); o PCMAT deve ser apresentado antes do início dos trabalhos (3.1.11); o fornecimento de EPIs é obrigação da Contratada (6.3.3)."
+        },
+        { //19
+            enunciado: "Considerando a ICA 85-16, assinale a opção que apresenta um período composto por uma determinação sobre os ensaios e testes de materiais.",
+            alternativas: [
+                "a) Os materiais que não satisfizerem aos requisitos exigidos ou que não forem aceitos pela Fiscalização da Obra serão definitivamente rejeitados.",
+                "b) A retirada de amostras e o preparo de corpos de prova serão executados pela Contratada ou por pessoal técnico do laboratório selecionado, com a assistência da Fiscalização da Obra.",
+                "c) Os materiais deverão ser ensaiados de acordo com os índices das normas e métodos da ABNT ou normas estrangeiras aplicáveis, na ausência de normas da ABNT ou do COMAER.",
+                "d) Ficará a cargo da Contratada a execução dos ensaios de laboratório e de campo, nos Regulamentos do Corpo de Bombeiros, e das Concessionárias de Serviços Públicos."
+            ],
+            correta: 3, //d
+            justificativa: "A alternativa d está correta. As alternativas a, b e c descrevem procedimentos ou condições, mas a alternativa d estabelece de forma direta e imperativa uma atribuição ('Ficará a cargo da Contratada'), caracterizando uma determinação sobre quem deve executar os ensaios, conforme o item 7.2.1."
+        },
+        { //20
+            enunciado: "De acordo com a ICA 85-16, sobre o recebimento de obras e serviços de engenharia, é correto afirmar que o Termo de Recebimento Provisório (TERP) será lavrado em 4 (quatro) vias, sendo que:",
+            alternativas: [
+                "a) A 1ª via destina-se à Contratada, para que esta tenha ciência do aceite provisório.",
+                "b) A 2ª via destina-se à Organização Responsável pela execução da obra.",
+                "c) A 3ª via destina-se ao Órgão de Engenharia encarregado da execução da Obra ou Serviço de Engenharia.",
+                "d) A 4ª via destina-se à Diretoria de Infraestrutura da Aeronáutica (DIRINFRA)."
+            ],
+            correta: 3, //d
+            justificativa: "A alternativa d está correta. O item 9.2.11 define a destinação das 4 vias do TERP: 1ª via - Órgão de Engenharia; 2ª via - Organização Responsável; 3ª via - Contratada; 4ª via - DIRINFRA."
+        },
+        { //21
+            enunciado: "Segundo a ICA 85-16, na hipótese de a Contratada precisar substituir um integrante de sua equipe técnica durante a execução da obra, a substituição:",
+            alternativas: [
+                "a) É livre, podendo ser realizada a qualquer momento, desde que o novo profissional possua qualificação equivalente, devendo apenas comunicar a Fiscalização da Obra posteriormente.",
+                "b) Dependerá da aquiescência da Administração quanto ao substituto, presumindo-se esta na falta de manifestação contrária dentro do prazo de 10 (dez) dias consecutivos da ciência da substituição.",
+                "c) Deve ser imediatamente aceita pela Fiscalização, desde que o profissional substituto seja registrado no CREA.",
+                "d) Só poderá ocorrer após a conclusão da etapa de serviços em que o profissional a ser substituído estava atuando, para não prejudicar o andamento da obra."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 5.4.4.2 estabelece que a substituição de integrante da equipe técnica depende da aquiescência da Administração, que tem o prazo de 10 dias consecutivos para se manifestar; a não manifestação implica aquiescência presumida."
+        },
+        { //22
+            enunciado: "A ICA 85-16 aborda a questão da Assessoria de Fiscalização da Obra Contratada. Sobre esse tema, é correto afirmar que:",
+            alternativas: [
+                "a) A Assessoria de Fiscalização, quando contratada, substitui completamente a Fiscalização da Obra, assumindo todas as suas responsabilidades perante a Administração.",
+                "b) A Assessoria de Fiscalização age como delegada da Fiscalização da Obra, podendo exigir da Contratada as informações necessárias para o exercício do Controle da Execução.",
+                "c) Caso os projetos tenham sido elaborados por uma empresa, é vedado contratar a mesma empresa para prestar Assessoria de Fiscalização, mesmo que os projetos já tenham sido aceitos pela Administração.",
+                "d) O Contrato não pode estabelecer penalidades específicas para a Assessoria de Fiscalização por erros ou omissões, devendo essas ser enquadradas na legislação comum."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 5.2.5 define que a Assessoria de Fiscalização age como delegada da Fiscalização da Obra. As demais são incorretas: a Assessoria auxilia, não substitui (5.2.1); a mesma empresa pode ser contratada se os projetos já tiverem sido aceitos (5.2.2); o contrato pode estabelecer penalidades (5.2.4)."
+        },
+        { //23
+            enunciado: "Com base na ICA 85-16, sobre as responsabilidades da Fiscalização da Obra e da Fiscalização do Contrato, é correto afirmar que:",
+            alternativas: [
+                "a) O controle da execução de obras e serviços de engenharia é de atribuição exclusiva da Fiscalização do Contrato.",
+                "b) A Fiscalização da Obra assessora a Fiscalização do Contrato no controle da execução da obra.",
+                "c) A Fiscalização do Contrato é a responsável pela aprovação técnica dos materiais a serem empregados na obra.",
+                "d) O Fiscal do Contrato deve participar ativamente das decisões técnicas diárias da obra, juntamente com a Fiscalização da Obra."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 5.6.1 é claro: 'O controle da execução de obras e serviços de engenharia é de atribuição da Fiscalização da Obra, que assessora a Fiscalização do Contrato.' As demais alternativas invertem ou distorcem as atribuições definidas na Instrução."
+        },
+        { //24
+            enunciado: "Analise as assertivas sobre as diretrizes e atribuições previstas na ICA 85-16. I. A fiscalização e recebimento de obras e serviços de engenharia, no âmbito do Comando da Aeronáutica, far-se-á com estrita observância dos dispositivos preconizados pela presente Instrução. II. Cabe à DIRINFRA, como Órgão Central do SISENG, exercer o Controle Técnico Administrativo das atividades dos demais elos executivos. III. Cabe aos Órgãos Executivos realizar o Controle Técnico Administrativo das obras e serviços sob suas responsabilidades e remeter a documentação à Subdiretoria de Patrimônio e Obras da DIRINFRA. Estão corretas as assertivas:",
+            alternativas: [
+                "a) I e II, apenas.",
+                "b) I e III, apenas.",
+                "c) II e III, apenas.",
+                "d) I, II e III."
+            ],
+            correta: 3, //d
+            justificativa: "A alternativa d está correta. As três assertivas estão em conformidade com a ICA 85-16: a I refere-se à diretriz do item 1.4; a II e a III referem-se às atribuições da DIRINFRA (item 2.1) e dos Órgãos Executivos (item 2.2), respectivamente."
+        },
+        { //25
+            enunciado: "Preencha as lacunas abaixo sobre as definições de projeto da ICA 85-16. O _____ é o conjunto de elementos necessários e suficientes, com nível de precisão adequado, para caracterizar a obra ou serviço de engenharia, elaborado com base nas indicações dos estudos técnicos preliminares. Já o _____ é elaborado após a conclusão do anterior e previamente à execução da obra ou serviço, podendo, excepcionalmente, ser desenvolvido concomitantemente à sua realização. A sequência de palavras que preenche corretamente as lacunas é:",
+            alternativas: [
+                "a) Projeto Executivo / Projeto Básico.",
+                "b) Projeto 'As Built' / Projeto Executivo.",
+                "c) Projeto Básico / Projeto Executivo.",
+                "d) Projeto Básico / Projeto 'As Built'."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. As definições correspondem exatamente aos itens 1.3.10 (Projeto Básico) e 1.3.12 (Projeto Executivo) da ICA 85-16."
+        },
+        { //26
+            enunciado: "De acordo com a ICA 85-16, no que se refere ao transporte, armazenamento e manuseio de materiais, é correto afirmar que:",
+            alternativas: [
+                "a) Os materiais estocados devem estar identificados, porém a quantificação exata só é necessária no momento de sua utilização na obra.",
+                "b) Os materiais sujeitos a danos por ação da luz, calor ou umidade podem ser armazenados a céu aberto, desde que devidamente cobertos com lonas plásticas.",
+                "c) Todos os materiais utilizados na construção deverão ser transportados, manuseados e armazenados com cuidado, de acordo com a Norma Regulamentadora nº 11 (NR11) do Ministério do Trabalho.",
+                "d) A Contratada não é obrigada a apresentar o prazo de validade dos materiais perecíveis, cabendo à Fiscalização da Obra essa verificação no ato do recebimento."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta, conforme item 7.3.1, que faz referência explícita à NR-11. A alternativa a é incorreta, pois o item 7.3.3 exige que os materiais estejam totalmente identificados e quantificados. A alternativa b é incorreta, pois o item 7.3.2 exige que sejam guardados em ambientes adequados. A alternativa d é incorreta, pois o item 7.3.4 impõe à Contratada a obrigação de apresentar o prazo de validade."
+        },
+        { //27
+            enunciado: "Sobre a composição e as atividades da Fiscalização da Obra, a ICA 85-16 estabelece que:",
+            alternativas: [
+                "a) Um mesmo profissional poderá participar simultaneamente da fiscalização de quantas obras a Administração julgar necessário, desde que sejam de pequeno porte.",
+                "b) A Administração deve buscar a distribuição equilibrada do total de obras com seus profissionais habilitados, para minimizar a quantidade de erros técnicos e administrativos.",
+                "c) A Comissão de Fiscalização da Obra, quando constituída, será composta por profissionais habilitados de acordo com a legislação do CREA, não sendo vedada a designação de engenheiros de especialização diferente para obras de infraestrutura.",
+                "d) O Fiscal da Obra, como membro técnico, não pode ser um agente da Administração com formação de nível médio em Tecnologia, devendo ser, obrigatoriamente, engenheiro ou arquiteto."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme item 5.1.2, que orienta a Administração a distribuir equilibradamente as obras para evitar a degradação técnica pelo acúmulo. As demais são incorretas: a quantidade é limitada pelo item 5.1.3; a designação de engenheiro de especialização diferente é vedada (5.1.1); e o fiscal pode ter nível médio em tecnologia (5.1.1)."
+        },
+        { //28
+            enunciado: "Considerando a ICA 85-16, quando a Administração não dispuser de meios suficientes para efetuar o Controle Técnico da execução através da Fiscalização da Obra, ela poderá:",
+            alternativas: [
+                "a) Delegar a responsabilidade da fiscalização para a própria Contratada, que nomeará um responsável técnico para essa função.",
+                "b) Contratar uma Assessoria de Fiscalização com profissionais especializados ou empresas de consultoria, para auxiliá-la em determinadas tarefas.",
+                "c) Suspender a obra até que haja disponibilidade de pessoal próprio para compor a fiscalização.",
+                "d) Aceitar que a obra seja executada sem fiscalização, desde que a Contratada apresente garantias reforçadas."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme previsto no item 5.2.1, que autoriza a contratação de uma Assessoria de Fiscalização para auxiliar a Administração em tarefas de controle técnico. As demais alternativas não encontram amparo na Instrução."
+        },
+        { //29
+            enunciado: "Associe as colunas, relacionando os documentos utilizados na fiscalização e recebimento de obras com suas respectivas finalidades, conforme a ICA 85-16. Documentos (1) Ordem de Serviço (OS) (2) Termo de Recebimento Provisório (TERP) (3) Termo de Recebimento Definitivo (TERD). Finalidades ( ) Documento pelo qual a Administração autoriza a Contratada a iniciar as suas atividades, contando-se o prazo de execução. ( ) Documento lavrado pela Comissão de Recebimento Definitivo que declara a obra ou serviço de engenharia aprovado, aceito e recebido. ( ) Documento elaborado pelo Fiscal da Obra que formaliza o aceite provisório da obra, podendo conter registro de deficiências de pequena monta. A sequência correta dessa associação é:",
+            alternativas: [
+                "a) (2); (3); (1).",
+                "b) (1); (3); (2).",
+                "c) (3); (1); (2).",
+                "d) (1); (2); (3)."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. A Ordem de Serviço (1) autoriza o início (item 1.3.8). O TERD (3) é o documento do recebimento definitivo (item 9.2.12). O TERP (2) é o documento do recebimento provisório (item 9.2.4, alínea a)."
+        },
+        { //30
+            enunciado: "De acordo com a ICA 85-16, sobre as obrigações e responsabilidades da Comissão de Fiscalização da Obra, é correto afirmar que:",
+            alternativas: [
+                "a) A presença da Fiscalização da Obra durante a execução implica solidariedade ou corresponsabilidade com a Contratada pela execução dos serviços.",
+                "b) Os Fiscais da Obra, integrantes de uma mesma Comissão, são responsáveis solidários pelos atos praticados pelos demais, relacionados ao acompanhamento, controle e fiscalização.",
+                "c) A Fiscalização da Obra responde pela adequação de obras e serviços de engenharia realizados em datas anteriores à data em que foi constituída, após análise e aceite.",
+                "d) A Comissão de Fiscalização da Obra não é obrigada a franquear à DIRINFRA o acesso à documentação da obra, a fim de preservar o sigilo das informações."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme item 5.5.4. A alternativa a é incorreta, pois o item 5.5.2 afirma que a presença da fiscalização não implica solidariedade. A alternativa c é incorreta, pois o item 5.5.6 exime a fiscalização por obras realizadas antes de sua constituição. A alternativa d é incorreta, pois o item 5.5.1 obriga a franquear acesso à DIRINFRA."
+        },
+        { //31
+            enunciado: "Considerando o disposto na ICA 85-16 sobre o recebimento de obras, após a lavratura do Termo de Recebimento Definitivo (TERD) da Obra e Serviço de Engenharia, cabe ao Ordenador de Despesa da Organização Militar:",
+            alternativas: [
+                "a) Arquivar o TERD em pasta específica, sem necessidade de outras providências.",
+                "b) Encaminhar o TERD ao Tribunal de Contas da União para homologação.",
+                "c) Atestar a capacidade técnica dos Fiscais da Obra e da Contratada.",
+                "d) Notificar a Contratada sobre o fim de suas obrigações contratuais."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. O item 9.5 é específico ao determinar que, após a lavratura do TERD, caberá ao Ordenador de Despesa atestar a capacidade técnica dos Fiscais da Obra e da Contratada."
+        },
+        { //32
+            enunciado: "De acordo com a ICA 85-16, sobre as medidas de segurança no canteiro de obras, analise as assertivas a seguir. I. A Contratada deverá realizar e colocar em prática um projeto de prevenção de incêndio para todo o canteiro de obras. II. Caso haja necessidade de emprego de explosivos, a Fiscalização da Obra deverá ser notificada e deverá exigir a presença de profissional habilitado. III. A Contratada manterá 'Seguro de Acidentes do Trabalho' para todos os seus empregados que exerçam atividades no canteiro de obras. Estão corretas as assertivas:",
+            alternativas: [
+                "a) I e II, apenas.",
+                "b) I e III, apenas.",
+                "c) II e III, apenas.",
+                "d) I, II e III."
+            ],
+            correta: 3, //d
+            justificativa: "A alternativa d está correta. As três assertivas estão em conformidade com os itens 6.3.6, 6.3.2 e 6.3.7 da ICA 85-16, respectivamente."
+        },
+        { //33
+            enunciado: "Preencha as lacunas abaixo sobre o controle e o recebimento de obras. A Fiscalização da Obra, ao considerar concluída a obra ou serviço de engenharia, comunicará o fato ao Agente Diretor, através do _____. A partir dessa comunicação, e após a comunicação formal da Contratada, a Administração terá o prazo de até _____ para lavrar o Termo de Recebimento Provisório (TERP). A sequência de palavras que preenche corretamente as lacunas é:",
+            alternativas: [
+                "a) Fiscal do Contrato / 15 (quinze) dias consecutivos.",
+                "b) Agente de Controle Interno do Contratante / 15 (quinze) dias consecutivos.",
+                "c) Ordenador de Despesas / 30 (trinta) dias corridos.",
+                "d) Agente de Controle Interno do Contratante / 30 (trinta) dias corridos."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 5.4.11 estabelece que a comunicação deve ser feita ao Agente Diretor através do Agente de Controle Interno do Contratante. O item 9.2.4, alínea a, define o prazo de 15 (quinze) dias consecutivos para a elaboração do TERP."
+        },
+        { //34
+            enunciado: "Sobre as subempreitadas, a ICA 85-16 estabelece que a subcontratação de partes da obra ou serviço:",
+            alternativas: [
+                "a) É livre, independentemente de previsão no edital e no contrato, desde que a Contratada comunique previamente à Fiscalização.",
+                "b) Depende de previsão no edital e no instrumento contratual, e necessita de autorização prévia da Fiscalização do Contrato, comprovada a idoneidade do subempreiteiro.",
+                "c) Não pode ser autorizada em nenhuma hipótese, sendo a Contratada obrigada a executar integralmente o objeto do contrato.",
+                "d) Dispensa a supervisão da Contratada, que se exime de responsabilidade perante a Administração sobre os serviços subcontratados."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme o item 3.3.2, que condiciona a subcontratação à previsão contratual, autorização prévia da Fiscalização e comprovação da idoneidade do subempreiteiro. As demais alternativas são incorretas."
+        },
+        { //35
+            enunciado: "Considerando a ICA 85-16, sobre o recebimento de obras e serviços de engenharia, é correto afirmar que o Termo de Recebimento Definitivo (TERD):",
+            alternativas: [
+                "a) Pode ser lavrado pela própria Fiscalização da Obra, desde que decorrido o Prazo de Verificação e Recebimento.",
+                "b) Dispensa a apresentação do Manual do Usuário pela Contratada, que pode ser entregue posteriormente.",
+                "c) Deve conter informações como o custo total da obra, características essenciais, e ser assinado por todos os membros da Comissão de Recebimento, Fiscal da Obra e representante da Contratada.",
+                "d) É o documento que autoriza o início da execução da obra e a contagem do prazo contratual."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. O item 9.3.2 lista as informações que devem constar no TERD (custo, características), e o item 9.2.17 especifica quem deve assinar o TERD. As demais são incorretas: o TERD é lavrado por comissão específica (9.2.4.b), o Manual do Usuário é obrigatório antes da assinatura do TERD (9.2.15), e a autorização para início é a Ordem de Serviço (1.3.8)."
+        },
+        { //36
+            enunciado: "Analise as assertivas sobre os conceitos apresentados na ICA 85-16. I. 'Administração' é o termo relativo à pessoa jurídica que executa diretamente obras e serviços de engenharia ou promove sua execução, mediante Licitação e Contratação. II. 'Agente Responsável' corresponde à pessoa física que administre dinheiros, bens e valores públicos da União ou que assuma obrigação de natureza pecuniária em nome destas. III. 'Comissão de Recebimento de Obras e Serviços de Engenharia' são Agentes da Administração, designados pela autoridade competente, que recebem a atribuição de fiscalizar o dia a dia da obra. Estão corretas apenas as assertivas:",
+            alternativas: [
+                "a) I e II.",
+                "b) I e III.",
+                "c) II e III.",
+                "d) I, II e III."
+            ],
+            correta: 0, //a
+            justificativa: "A alternativa a está correta. As assertivas I e II correspondem às definições de 'Administração' (item 1.3.1) e 'Agente Responsável' (item 1.3.3). A assertiva III é incorreta, pois a definição de 'Comissão de Recebimento' (item 1.3.4) é para o recebimento da obra, não para a fiscalização diária (que é atribuição da Fiscalização da Obra)."
+        },
+        { //37
+            enunciado: "De acordo com a ICA 85-16, a Diretoria de Infraestrutura da Aeronáutica (DIRINFRA), como Órgão Central do SISENG, tem, entre suas atribuições, a de:",
+            alternativas: [
+                "a) Designar os fiscais de obra para todas as Organizações Militares do COMAER.",
+                "b) Realizar, sempre que necessário, visitas ou inspeções de caráter técnico para verificação ou solução de problemas detectados.",
+                "c) Executar diretamente as obras de infraestrutura de grande porte, utilizando seu próprio corpo técnico.",
+                "d) Aprovar a substituição de qualquer material especificado em projeto, em todas as obras do COMAER."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme item 2.1.1, que prevê a realização de visitas ou inspeções técnicas pela DIRINFRA. As demais atribuições não são típicas do Órgão Central, sendo, em geral, de competência dos órgãos executivos ou da fiscalização local."
+        },
+        { //38
+            enunciado: "Sobre o Diário de Obras (DO), a ICA 85-16 estabelece que são informações que devem ser obrigatoriamente registradas pela Fiscalização:",
+            alternativas: [
+                "a) As condições meteorológicas, o número de visitas de fornecedores e as ligações telefônicas recebidas.",
+                "b) As falhas nos serviços de terceiros não sujeitos à ingerência da Contratada, as datas de conclusão de etapas e os acidentes ocorridos.",
+                "c) O relatório financeiro detalhado da Contratada e o extrato bancário dos pagamentos efetuados.",
+                "d) As atas de reunião da diretoria da Contratada e as alterações no seu contrato social."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, pois elenca informações que constam no item 6.1.5.1 como de registro obrigatório (alíneas b, d, e). As demais alternativas apresentam informações de cunho administrativo-financeiro ou corporativo da Contratada que não são objeto do Diário de Obras."
+        },
+        { //39
+            enunciado: "Associe as colunas, relacionando os conceitos da ICA 85-16 às suas definições. Conceitos (1) Fiscal de Obra (2) Fiscal de Contrato (3) Assessoria de Fiscalização da Obra Contratada. Definições ( ) Agente da Administração encarregado da parte técnica de engenharia da execução do objeto Contratual. ( ) Empresa ou profissional especializado contratado para auxiliar a Administração no Controle Técnico da execução. ( ) Agente da Administração encarregado da parte administrativa do Contrato. A sequência correta dessa associação é:",
+            alternativas: [
+                "a) (1); (3); (2).",
+                "b) (2); (1); (3).",
+                "c) (3); (2); (1).",
+                "d) (1); (2); (3)."
+            ],
+            correta: 0, //a
+            justificativa: "A alternativa a está correta. As definições são encontradas nos itens: (1) Fiscal de Obra (1.3.6.1); (3) Assessoria de Fiscalização (5.2); (2) Fiscal de Contrato (1.3.7.1)."
+        },
+        { //40
+            enunciado: "De acordo com a ICA 85-16, sobre o recebimento de obras, após a comunicação de conclusão da obra pela Contratada, qual é o prazo para a lavratura do Termo de Recebimento Provisório (TERP) pelo Fiscal da Obra?",
+            alternativas: [
+                "a) Imediatamente, no ato da comunicação.",
+                "b) Em até 7 (sete) dias consecutivos.",
+                "c) Em até 15 (quinze) dias consecutivos.",
+                "d) Em até 30 (trinta) dias corridos."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. O item 9.2.4, alínea 'a', estabelece o prazo de 15 (quinze) dias consecutivos para a elaboração do TERP."
+        },
+        { //41
+            enunciado: "Sobre as atribuições da Fiscalização da Obra listadas na ICA 85-16, é incorreto afirmar que cabe a ela:",
+            alternativas: [
+                "a) Fornecer à Contratada todos os elementos indispensáveis ao início da obra, como dados para locação e níveis de referência.",
+                "b) Decidir sobre dúvidas surgidas no decorrer da construção e efetuar anotações diárias em livro apropriado.",
+                "c) Celebrar aditivos contratuais para acréscimo ou supressão de serviços, quando necessário.",
+                "d) Diligenciar e receber as medições dos serviços efetuados e certificar as respectivas faturas mediante Termo de Aceitação."
+            ],
+            correta: 2, //c (incorreta)
+            justificativa: "A alternativa c é a incorreta, portanto, é a resposta. A celebração de aditivos contratuais é ato da Administração/Contratante, não da Fiscalização da Obra. A Fiscalização da Obra pode propor acréscimos ou supressões (item 5.4.17), mas não celebrá-los. As demais alternativas são atribuições da Fiscalização da Obra (itens 5.4.5, 5.4.1 e 5.4.7)."
+        },
+        { //42
+            enunciado: "Preencha as lacunas abaixo sobre as obrigações da Contratada referentes à documentação e responsabilidades técnicas, conforme a ICA 85-16. A Contratada deverá comunicar, por escrito, à Fiscalização da Obra o nome do engenheiro, arquiteto ou equipe técnica responsável pelo andamento dos serviços, que deverá ser registrado no _____ e estar em pleno gozo de suas habilitações profissionais. Além disso, a Contratada deverá providenciar, antes do início dos serviços, a _____ junto ao CREA competente. A sequência de palavras que preenche corretamente as lacunas é:",
+            alternativas: [
+                "a) Ministério do Trabalho / Licença de Operação.",
+                "b) CREA / Anotação de Responsabilidade Técnica (ART).",
+                "c) Conselho de Arquitetura (CAU) / Matrícula de Obra.",
+                "d) Sindicato da Categoria / Certidão de Acervo Técnico (CAT)."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 3.2.1 menciona o registro no CREA, e o item 3.2.1.1 exige a providência da Anotação de Responsabilidade Técnica (ART)."
+        },
+        { //43
+            enunciado: "Considerando a ICA 85-16, sobre a Consultoria Técnica Contratada, é correto afirmar que:",
+            alternativas: [
+                "a) A Consultoria Técnica substitui a necessidade de existência de uma Fiscalização da Obra própria da Administração.",
+                "b) A Consultoria Técnica só pode ser contratada para obras de infraestrutura aeroportuária de grande complexidade.",
+                "c) A Consultoria Técnica pode ser contratada para responder a questões propostas pela Administração quando esta não dispuser de elementos especializados.",
+                "d) A Consultoria Técnica responde solidariamente com a Contratada pela execução da obra."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. O item 5.3.1 define a Consultoria Técnica como um serviço contratado para responder a questões propostas pela Administração quando faltam elementos especializados. As demais alternativas são incorretas: a consultoria é um apoio, não substitui a fiscalização (5.3.1); não há restrição a apenas um tipo de obra; e a responsabilidade pela execução é da Contratada (5.5.2)."
+        },
+        { //44
+            enunciado: "Sobre as disposições da ICA 85-16 para a execução da obra, analise as assertivas quanto ao canteiro de obras. I. A Contratada terá a seu cargo as ligações provisórias de água, esgoto e energia elétrica dos canteiros, de forma que os consumos possam ser medidos e cobrados pela Contratante. II. A Administração responderá por eventuais danos ou perdas de materiais e equipamentos da Contratada que venham a ocorrer nas áreas de propriedade da União. III. A Contratada deverá retirar todas as instalações provisórias do local dos trabalhos até 15 (quinze) dias após o recebimento definitivo dos serviços. Está(ão) correta(s) apenas a(s) assertiva(s):",
+            alternativas: [
+                "a) I.",
+                "b) I e II.",
+                "c) I e III.",
+                "d) II e III."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. A assertiva I está de acordo com o item 6.2.4. A assertiva II é falsa, pois o item 6.2.7 afirma que a Administração, em hipótese alguma, responderá por esses danos. A assertiva III está de acordo com o item 6.2.9."
+        },
+        { //45
+            enunciado: "De acordo com a ICA 85-16, a respeito da qualidade dos materiais a empregar na obra, é correto afirmar que:",
+            alternativas: [
+                "a) A expressão 'de primeira qualidade' indica que o material deve ser o mais caro disponível no mercado, independentemente das especificações técnicas.",
+                "b) A Contratada deverá apresentar amostras dos materiais a empregar com antecedência adequada para aprovação da Fiscalização da Obra.",
+                "c) É permitido o uso de material improvisado em substituição ao especificado, desde que aprovado verbalmente pelo fiscal no momento da execução.",
+                "d) Os materiais rejeitados pela Fiscalização da Obra poderão ser utilizados em outras partes da obra, desde que com autorização da Administração."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta, conforme item 7.1.3. As demais alternativas são incorretas: 'primeira qualidade' refere-se à gradação superior (7.1.2); é vedado o uso de material improvisado (7.1.4); e materiais rejeitados devem ser retirados do canteiro (7.1.6)."
+        },
+        { //46
+            enunciado: "Considerando a ICA 85-16, sobre o recebimento de obras e serviços de engenharia, qual documento a Contratada deve apresentar antes da assinatura do Termo de Recebimento Definitivo (TERD)?",
+            alternativas: [
+                "a) A Ordem de Serviço.",
+                "b) A Nota Fiscal de todos os materiais comprados.",
+                "c) O Manual do Usuário.",
+                "d) O Projeto Básico revisado."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. O item 9.2.15 estabelece que 'Antes da assinatura do Termo de Recebimento Definitivo de Obra ou Serviço de Engenharia, a Contratada deverá apresentar um Manual do Usuário.'"
+        },
+        { //47
+            enunciado: "Associe as colunas, relacionando os itens que devem constar no Termo de Recebimento Definitivo (TERD) com suas respectivas descrições. Itens do TERD (1) Custo total da obra (2) Características essenciais (3) Prazo. Descrições ( ) Descrição sintética das obras e serviços executados, como número de peças, áreas, tipo de fundação, etc. ( ) Indicação do número de dias em que a obra foi executada, do prazo inicial e de prorrogações concedidas. ( ) Indicação do valor inicial, dos serviços complementares, reajustes e saldos, se houver. A sequência correta dessa associação é:",
+            alternativas: [
+                "a) (1); (2); (3).",
+                "b) (2); (3); (1).",
+                "c) (3); (1); (2).",
+                "d) (2); (1); (3)."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. As descrições correspondem aos itens: (2) Características essenciais (9.3.2.2); (3) Prazo (9.3.1.6); (1) Custo total (9.3.2.1)."
+        },
+        { //48
+            enunciado: "Analise as assertivas sobre as atribuições da Fiscalização do Contrato previstas na ICA 85-16. I. A Fiscalização do Contrato deve expedir por escrito as determinações e comunicações dirigidas à Contratada. II. Compete à Fiscalização do Contrato comunicar ao Ordenador de Despesas ocorrências que possam levar à rescisão do contrato. III. A Fiscalização do Contrato é responsável por receber a nota fiscal do serviço executado, juntamente com o Termo de Aceitação de Medição lavrado pela Fiscalização da Obra. Estão corretas as assertivas:",
+            alternativas: [
+                "a) I e II, apenas.",
+                "b) I e III, apenas.",
+                "c) II e III, apenas.",
+                "d) I, II e III."
+            ],
+            correta: 3, //d
+            justificativa: "A alternativa d está correta. As três assertivas estão de acordo com as atividades da Fiscalização do Contrato descritas nos itens 4.2.1, 4.2.2 e 4.2.4 da ICA 85-16."
+        },
+        { //49
+            enunciado: "De acordo com a ICA 85-16, após a conclusão da obra e a lavratura do Termo de Recebimento Provisório (TERP), a obra ficará em observação durante um período para verificação e testes finais. Esse período é denominado:",
+            alternativas: [
+                "a) Prazo de Garantia.",
+                "b) Prazo de Verificação e Recebimento.",
+                "c) Período de Observação Técnica.",
+                "d) Fase de Estabilização da Obra."
+            ],
+            correta: 1, //b
+            justificativa: "A alternativa b está correta. O item 1.3.9 define 'Prazo de Verificação e Recebimento' como o período, normalmente de 60 dias, para verificação e testes finais após a assinatura do TERP."
+        },
+        { //50
+            enunciado: "Sobre o encerramento da obra e os procedimentos para recebimento, a ICA 85-16 estabelece que, após a conclusão, a Contratada deve:",
+            alternativas: [
+                "a) Aguardar a convocação da Administração para a vistoria de recebimento.",
+                "b) Entregar as chaves da obra à Fiscalização e encerrar suas atividades no local.",
+                "c) Comunicar por escrito à Fiscalização da Obra o encerramento da obra ou serviço de engenharia.",
+                "d) Emitir a nota fiscal final e encaminhá-la diretamente ao Ordenador de Despesas para pagamento."
+            ],
+            correta: 2, //c
+            justificativa: "A alternativa c está correta. O item 9.2.1 é claro: 'Concluída a obra ou serviço de engenharia, respeitada a data de encerramento do Prazo de Execução, a Contratada deverá comunicar à Fiscalização da Obra, por escrito, seu encerramento.'"
+        }
+    ];
+
+    let respostasUsuario = new Array(questoes.length).fill(null); // armazena índice da alternativa selecionada
+    let corrigiu = false;
+    let acertos = 0;
+
+    function iniciarProva() {
+        document.getElementById('capa').style.display = 'none';
+        document.getElementById('header').style.display = 'block';
+        document.getElementById('controle').style.display = 'flex';
+        document.getElementById('questoesArea').style.display = 'block';
+        document.getElementById('rodape').style.display = 'block';
+        renderizarQuestoes();
+    }
+
+    function renderizarQuestoes() {
+        const area = document.getElementById('questoesArea');
+        let html = '';
+        for (let i = 0; i < questoes.length; i++) {
+            const q = questoes[i];
+            const idx = i;
+            html += `
+                <div class="questao-card" id="q-${idx}">
+                    <div class="questao-num">Questão ${idx+1}</div>
+                    <div class="questao-enunciado">${q.enunciado}</div>
+                    <div class="alternativas" id="alt-${idx}">
+            `;
+            for (let altIdx = 0; altIdx < q.alternativas.length; altIdx++) {
+                const letra = String.fromCharCode(97 + altIdx); // a, b, c, d
+                html += `
+                    <div class="alternativa" onclick="selecionarAlternativa(${idx}, ${altIdx})">
+                        <input type="radio" name="q${idx}" value="${altIdx}" id="q${idx}${letra}" ${respostasUsuario[idx] === altIdx ? 'checked' : ''}>
+                        <label for="q${idx}${letra}"><strong>${letra})</strong> ${q.alternativas[altIdx]}</label>
+                    </div>
+                `;
+            }
+            html += `
+                    </div>
+                    <div class="justificativa" id="just-${idx}"></div>
+                    <div class="footer-questao" id="footer-${idx}"></div>
+                </div>
+            `;
+        }
+        area.innerHTML = html;
+    }
+
+    function selecionarAlternativa(questaoIdx, altIdx) {
+        respostasUsuario[questaoIdx] = altIdx;
+        // desmarcar outros radios do grupo (já é automático por nome, mas garantimos)
+        const radios = document.getElementsByName(`q${questaoIdx}`);
+        for (let r of radios) {
+            r.checked = (r.value == altIdx);
+        }
+        // se já tiver corrigido, podemos reverter a exibição? Melhor deixar como está, só mostra justificativa ao corrigir
+    }
+
+    function corrigirTodas() {
+        acertos = 0;
+        for (let i = 0; i < questoes.length; i++) {
+            const q = questoes[i];
+            const resp = respostasUsuario[i];
+            const justDiv = document.getElementById(`just-${i}`);
+            const footer = document.getElementById(`footer-${i}`);
+            let resultadoHtml = '';
+            if (resp === null) {
+                resultadoHtml = '<span style="color:orange;">⚠️ Não respondida</span>';
+                justDiv.style.display = 'none';
+            } else {
+                const correta = q.correta;
+                if (resp === correta) {
+                    acertos++;
+                    resultadoHtml = '<span class="resultado-item">✅ Correta</span>';
+                } else {
+                    resultadoHtml = `<span class="incorreto">❌ Incorreta (resposta correta: ${String.fromCharCode(97+correta)})</span>`;
+                }
+                justDiv.style.display = 'block';
+                justDiv.innerHTML = `<strong>Justificativa:</strong> ${q.justificativa}`;
+            }
+            footer.innerHTML = resultadoHtml;
+        }
+        corrigiu = true;
+        const percent = ((acertos / questoes.length) * 100).toFixed(1);
+        document.getElementById('percentual').innerText = `${percent}% acertos (${acertos}/${questoes.length})`;
+        const notaFinalDiv = document.getElementById('notaFinal');
+        notaFinalDiv.style.display = 'block';
+        notaFinalDiv.innerHTML = `🎯 RESULTADO FINAL: ${acertos} ACERTOS EM ${questoes.length} (${percent}%)`;
+    }
+
+    window.onload = function() {
+        // não inicia automaticamente, só após clicar na capa
+    };
+</script>
+</body>
+</html>

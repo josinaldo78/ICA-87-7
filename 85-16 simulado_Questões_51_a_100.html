@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAOF 2025 · ICA 85-16 (questões 51-100)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 20px;
+        }
+        /* capa azul escuro */
+        .capa {
+            background-color: #0b1e4a;
+            color: white;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 40px -10px rgba(0,20,50,0.5);
+            border: 1px solid #2d4b8c;
+        }
+        .capa h1 {
+            font-size: 3.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .capa h3 {
+            font-size: 2rem;
+            font-weight: 400;
+            background-color: rgba(255,255,255,0.1);
+            padding: 12px 40px;
+            border-radius: 60px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(4px);
+        }
+        .capa .ref {
+            background-color: #1e3a8a;
+            padding: 30px 25px;
+            border-radius: 40px;
+            max-width: 800px;
+            margin: 30px auto;
+            font-size: 1.2rem;
+            border-left: 6px solid #fbbf24;
+        }
+        .capa .ref p {
+            margin: 12px 0;
+        }
+        .capa button {
+            background-color: #f5c542;
+            color: #0b1e4a;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #a57c1a, 0 12px 20px rgba(0,0,0,0.3);
+            transition: 0.1s ease;
+            margin-top: 40px;
+        }
+        .capa button:hover {
+            background-color: #ffd966;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 #a57c1a, 0 18px 25px rgba(0,0,0,0.4);
+        }
+        .capa small {
+            display: block;
+            margin-top: 40px;
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        /* controle barra */
+        .controle {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 20px 25px;
+            border-radius: 60px;
+            margin: 30px 0 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .nota-box {
+            background-color: #0b1e4a;
+            color: white;
+            border-radius: 40px;
+            padding: 10px 30px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        .btn-impressao {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px #00000030;
+        }
+        .btn-impressao:hover {
+            background-color: #1a2632;
+        }
+
+        /* questões */
+        .questoes-wrapper {
+            background-color: white;
+            border-radius: 40px;
+            padding: 30px 35px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .questao-item {
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .questao-item:last-child {
+            border-bottom: none;
+        }
+        .enunciado {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            background-color: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 28px;
+        }
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .alternativa {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background-color: #f1f4f9;
+            padding: 12px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 2px solid transparent;
+        }
+        .alternativa:hover {
+            background-color: #e6eaf0;
+        }
+        .alternativa.selecionada {
+            border-color: #0b1e4a;
+            background-color: #dbeafe;
+            font-weight: 500;
+        }
+        .alternativa.errada {
+            border-color: #b91c1c;
+            background-color: #fee2e2;
+        }
+        .alternativa.certa {
+            border-color: #047857;
+            background-color: #d1fae5;
+        }
+        .letra {
+            font-weight: 700;
+            background-color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .justificativa {
+            background-color: #f1f5f9;
+            padding: 18px 22px;
+            border-radius: 28px;
+            margin-top: 15px;
+            border-left: 8px solid #0b1e4a;
+            font-size: 1rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .feedback-count {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #334155;
+            display: flex;
+            gap: 25px;
+        }
+        .btn-pequeno {
+            background: none;
+            border: 2px solid #0b1e4a;
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: #0b1e4a;
+            font-weight: 600;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        .btn-pequeno:hover {
+            background-color: #0b1e4a;
+            color: white;
+        }
+
+        /* impressão */
+        @media print {
+            .capa, .controle, .btn-impressao, .btn-pequeno, .feedback-count {
+                display: none !important;
+            }
+            .questoes-wrapper {
+                box-shadow: none;
+                padding: 0;
+            }
+            body {
+                background-color: white;
+                padding: 0.5cm;
+            }
+            .alternativa {
+                break-inside: avoid;
+                background-color: #f3f3f3 !important;
+                border: 1px solid #888;
+            }
+            .justificativa {
+                border-left: 4px solid black;
+                background-color: #f9f9f9 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- CAPA AZUL ESCURO (QUESTÕES 51-100) -->
+<div id="capa" class="capa">
+    <h1>✈️ EAOF 2025 · <p>ICA 85-16 PARTE II</h1>
+    <h3>SERVIÇOS DE ENGENHARIA<p>QUESTÕES 51 A 100</h3>
+    <div class="ref">
+        <p>📘 <strong>ICA 85-16</strong> – FISCALIZAÇÃO E RECEBIMENTO DE OBRAS E SERVIÇOS DE ENGENHARIA (2017)</p>
+        <p>📄 Questões originais baseadas nas páginas 12 a 18 do caderno EAOF 2025 (Versão A)</p>
+        <p>🗂️ Bloco 51–100 · justificativa extraída diretamente do texto da ICA 85-16</p>
+        <p>⚙️ Modo concurso · duplo clique para confirmar · nota final · impressão A4</p>
+    </div>
+    <button id="btnIniciar">▶ INICIAR SEGUNDA PARTE</button>
+    <small>Comando da Aeronáutica · DIRINFRA</small>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL (oculto até iniciar) -->
+<div id="conteudoProva" style="display: none;">
+
+    <div class="controle">
+        <div class="nota-box" id="notaExibida">0,00</div>
+        <div style="display: flex; gap: 15px;">
+            <button class="btn-pequeno" id="limparRespostas">♻️ limpar</button>
+            <button class="btn-impressao" id="btnImprimir"><span>🖨️</span> imprimir (A4)</button>
+        </div>
+    </div>
+
+    <div id="questoesContainer" class="questoes-wrapper"></div>
+
+    <!-- totalizador inferior -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <span id="acertosStatus" style="font-weight:600;">Acertos: 0 / 50 (0%)</span>
+        <span id="errosStatus" style="font-weight:600;">Erros: 0</span>
+    </div>
+</div>
+
+<script>
+(function() {
+    // --------------------------------------------------------------
+    // BANCO DE QUESTÕES 51 a 100 (exatamente 50 itens)
+    // --------------------------------------------------------------
+    const questoes = [
+        { // 51
+            enunciado: "51) A Portaria de Designação da Fiscalização da Obra, conforme o modelo do Anexo B, deve conter, entre outros elementos:",
+            alternativas: [
+                "a) O valor total do contrato e a dotação orçamentária.",
+                "b) A identificação do(s) Agente(s) designado(s), o número do contrato e a descrição sucinta do objeto.",
+                "c) O cronograma físico-financeiro da obra.",
+                "d) As especificações técnicas resumidas da obra."
+            ],
+            correta: 1,
+            justificativa: "Item 5.1.4 e modelo Anexo B: a portaria designa os agentes relacionados ao contrato e objeto especificado, contendo identificação dos designados, número do contrato e descrição do objeto."
+        },
+        { // 52
+            enunciado: "52) A 'Ordem de Serviço', cujo modelo é o Anexo C da ICA 85-16, é um documento que deve ser assinado pela Administração e entregue à Contratada. Qual informação essencial deve constar neste documento?",
+            alternativas: [
+                "a) A data considerada para efeito de contagem do prazo contratual.",
+                "b) A composição da Comissão de Fiscalização.",
+                "c) O laudo de vistoria do local da obra.",
+                "d) A aprovação das amostras dos materiais."
+            ],
+            correta: 0,
+            justificativa: "Item 1.3.8: a Ordem de Serviço autoriza o início, 'contando-se o prazo de execução a partir da data que for estipulada na referida ordem'. O modelo no Anexo C inclui campo para essa data."
+        },
+        { // 53
+            enunciado: "53) Para obras ou serviços de engenharia executados por Administração Direta, a ICA 85-16 prevê um documento específico. Qual é esse documento?",
+            alternativas: [
+                "a) Ordem de Serviço.",
+                "b) Termo de Recebimento Provisório.",
+                "c) Comunicação de Obra ou Serviço de Engenharia Executado por Administração Direta (Anexo G).",
+                "d) Portaria de Designação da Comissão de Fiscalização."
+            ],
+            correta: 2,
+            justificativa: "O Anexo G, na página 52 da ICA, é intitulado 'MODELO DE COMUNICAÇÃO DE OBRA OU SERVIÇO DE ENGENHARIA EXECUTADO POR ADMINISTRAÇÃO DIRETA'."
+        },
+        { // 54
+            enunciado: "54) A ICA 85-16 determina que a Ficha de Controle de Prazo (Anexo E) e a Ficha de Situação Financeira (Anexo F) devem ser preenchidas e mantidas atualizadas. Qual o objetivo principal dessas fichas?",
+            alternativas: [
+                "a) Substituir o Diário de Obras.",
+                "b) Servir como documentos públicos para consulta da sociedade.",
+                "c) Compor o controle sistêmico da obra, permitindo o acompanhamento de prazos e custos.",
+                "d) Serem anexadas à nota fiscal para pagamento da Contratada."
+            ],
+            correta: 2,
+            justificativa: "Item 8.2.1.2: determina o preenchimento dessas fichas como parte do 'Controle Sistêmico', que visa manter a Administração informada."
+        },
+        { // 55
+            enunciado: "55) O Termo de Aceitação de Medição de Obras e Serviços de Engenharia (Anexo N) é um documento crucial para o faturamento. Quem é responsável por lavrá-lo?",
+            alternativas: [
+                "a) A Contratada.",
+                "b) A Comissão de Fiscalização do Contrato.",
+                "c) A Comissão de Fiscalização da Obra ou Serviço de Engenharia.",
+                "d) A Comissão de Recebimento Definitivo."
+            ],
+            correta: 2,
+            justificativa: "O próprio título do Anexo N (página 60) e o item 4.2.4 mencionam que este termo é lavrado pela Comissão de Fiscalização da Obra ou Serviço de Engenharia."
+        },
+        { // 56
+            enunciado: "56) Segundo a ICA 85-16, o que deve ser feito com o material pago pela Administração que ainda estiver no canteiro de obras durante sua desmontagem?",
+            alternativas: [
+                "a) Deve ser vendido pela Contratada para ajudar nos custos da desmontagem.",
+                "b) Deve ser descartado como entulho.",
+                "c) Deve ser entregue à seção de material da Organização, caso haja interesse.",
+                "d) Deve ser doado a instituições de caridade locais."
+            ],
+            correta: 2,
+            justificativa: "Item 6.2.9.1: 'Durante a desmontagem do canteiro de obras, todo material que tiver sido pago pela Administração será entregue à seção de material da Organização, caso haja interesse.'"
+        },
+        { // 57
+            enunciado: "57) A ICA 85-16 estabelece que a Contratada é responsável pelas ligações provisórias de utilidades no canteiro. Como deve ser feita a cobrança desses consumos?",
+            alternativas: [
+                "a) A Contratada é isenta do pagamento, pois o custo está incluso no contrato.",
+                "b) A Administração arca com todos os custos, por se tratar de área pública.",
+                "c) As contas devem ser pagas diretamente pela Contratada às concessionárias.",
+                "d) As ligações devem ser feitas de forma que os consumos possam ser medidos e cobrados pela Contratante."
+            ],
+            correta: 3,
+            justificativa: "Item 6.2.4: as ligações devem ser feitas 'de forma que os consumos possam ser medidos e cobrados pela Contratante'."
+        },
+        { // 58
+            enunciado: "58) Em relação aos materiais estocados no canteiro, a ICA 85-16 determina que eles devem estar:",
+            alternativas: [
+                "a) Embalados e lacrados até o momento do uso.",
+                "b) Totalmente identificados e quantificados, para que a Fiscalização possa saber a quantidade existente a qualquer momento.",
+                "c) Sob a guarda exclusiva da fiscalização.",
+                "d) Segregados por data de chegada, sem necessidade de identificação, pois a nota fiscal já os descreve."
+            ],
+            correta: 1,
+            justificativa: "Item 7.3.3: 'Os materiais estocados devem estar totalmente identificados e quantificados, de modo que, a qualquer momento, a Fiscalização da Obra possa saber a quantidade existente na obra.'"
+        },
+        { // 59
+            enunciado: "59) A ICA 85-16 determina que, antes da assinatura do TERD, a Contratada deve apresentar um Manual do Usuário. O que esse manual deve incluir obrigatoriamente?",
+            alternativas: [
+                "a) O curriculum vitae do engenheiro responsável.",
+                "b) A vida útil dos materiais empregados, Certificado de Garantias dos equipamentos e um cronograma de manutenção preventiva.",
+                "c) As notas fiscais de compra de todos os materiais.",
+                "d) O projeto 'as built' em formato digital."
+            ],
+            correta: 1,
+            justificativa: "Item 9.2.16: 'Neste Manual do Usuário, deverá estar inclusa a vida útil dos materiais empregados, Certificado de Garantias do fabricante de equipamentos instalados e um cronograma de execução de serviços de manutenção preventiva'."
+        },
+        { // 60
+            enunciado: "60) Quando ocorrem alterações no projeto inicial, a ICA 85-16 determina que, junto ao TERD, seja enviada uma cópia digital dos desenhos finais. Quais desenhos são especificamente mencionados?",
+            alternativas: [
+                "a) Todos os projetos estruturais, hidráulicos e elétricos.",
+                "b) Plantas de locação e plantas baixas.",
+                "c) Detalhamento de fundações e coberturas.",
+                "d) Projeto de terraplenagem e drenagem."
+            ],
+            correta: 1,
+            justificativa: "Item 9.2.18: 'enviar 01 (uma) cópia digital dos desenhos finais (plantas de locação e plantas baixas) junto ao TERD.'"
+        },
+        { // 61
+            enunciado: "61) De acordo com o item 9.2.5 da ICA 85-16, quem é o responsável por lavrar o Termo de Recebimento Provisório (TERP) junto ao representante da Contratada?",
+            alternativas: [
+                "a) A Comissão de Recebimento Definitivo.",
+                "b) O Fiscal do Contrato.",
+                "c) A Fiscalização da Obra.",
+                "d) O Ordenador de Despesas."
+            ],
+            correta: 2,
+            justificativa: "Item 9.2.5: 'A Fiscalização da Obra deverá lavrar o TERP, junto ao representante da Contratada'."
+        },
+        { // 62
+            enunciado: "62) A ICA 85-16 define que uma obra deve ser considerada concluída quando estiver conforme o instrumento contratual. No entanto, o que concretiza definitivamente essa conformidade?",
+            alternativas: [
+                "a) A comunicação por escrito da Contratada.",
+                "b) A lavratura do Termo de Recebimento Definitivo (TERD).",
+                "c) A assinatura do Termo de Recebimento Provisório (TERP).",
+                "d) A emissão do 'Habite-se' pela Prefeitura."
+            ],
+            correta: 1,
+            justificativa: "Item 9.2.6: '...o que somente se concretiza com a lavratura do TERD.'"
+        },
+        { // 63
+            enunciado: "63) O Termo de Recebimento Provisório (TERP) deve ser lavrado em quantas vias, e qual é o destino da 4ª via?",
+            alternativas: [
+                "a) 3 vias; a 4ª via à Contratada.",
+                "b) 4 vias; a 4ª via à Diretoria de Infraestrutura da Aeronáutica.",
+                "c) 5 vias; a 4ª via ao processo da obra.",
+                "d) 4 vias; a 4ª via ao órgão de engenharia local."
+            ],
+            correta: 1,
+            justificativa: "Item 9.2.11: distribuição das 4 vias do TERP, sendo a 4ª via destinada 'à Diretoria de Infraestrutura da Aeronáutica'."
+        },
+        { // 64
+            enunciado: "64) Já o Termo de Recebimento Definitivo (TERD) deve ser lavrado em quantas vias, e qual é o destino da 1ª via?",
+            alternativas: [
+                "a) 5 vias; a 1ª via à Diretoria de Infraestrutura da Aeronáutica.",
+                "b) 4 vias; a 1ª via à Contratada.",
+                "c) 5 vias; a 1ª via ao processo da obra.",
+                "d) 4 vias; a 1ª via ao órgão de execução."
+            ],
+            correta: 0,
+            justificativa: "Item 9.3.3: distribuição das 5 vias do TERD, sendo a 1ª via destinada 'à Diretoria de Infraestrutura da Aeronáutica (Subdiretoria de Patrimônio e Obras)'."
+        },
+        { // 65
+            enunciado: "65) A ICA 85-16 menciona a responsabilidade da Contratada pela solidez e segurança do trabalho. Qual o prazo previsto no Código Civil para essa responsabilidade em contratos de empreitada de construções consideráveis?",
+            alternativas: [
+                "a) 2 anos.",
+                "b) 3 anos.",
+                "c) 5 anos.",
+                "d) 10 anos."
+            ],
+            correta: 2,
+            justificativa: "Item 3.1.17 cita o art. 618 do Código Civil: 'o empreiteiro de materiais e execução responderá, durante o prazo irredutível de cinco anos, pela solidez e segurança do trabalho'."
+        },
+        { // 66
+            enunciado: "66) Ainda sobre os vícios e defeitos ocultos, o item 3.1.16.1 da ICA 85-16 faz referência ao direito de rejeitar a coisa por vícios ocultos. Qual legislação é citada para fundamentar essa responsabilidade do construtor?",
+            alternativas: [
+                "a) Apenas o Código Civil.",
+                "b) A Lei de Licitações (Lei 8.666/93).",
+                "c) O Código de Defesa do Consumidor (Lei nº 8.078/1990) e o Código Civil.",
+                "d) A Consolidação das Leis do Trabalho (CLT)."
+            ],
+            correta: 2,
+            justificativa: "Item 3.1.16.1 menciona tanto o art. 441 da Lei nº 10.406/2002 (Código Civil) quanto o art. 12 da Lei nº 8.078/1990 (Código de Defesa do Consumidor)."
+        },
+        { // 67
+            enunciado: "67) A ICA 85-16 estabelece que, na execução da obra, devem ser adotadas medidas de segurança. Em caso de necessidade de emprego de explosivos, qual a obrigação da Contratada perante a Fiscalização?",
+            alternativas: [
+                "a) Solicitar autorização por escrito à Prefeitura Municipal.",
+                "b) Notificar a Fiscalização da Obra antecipadamente e exigir a presença de profissional habilitado.",
+                "c) Comunicar o fato após a detonação, para registro.",
+                "d) Substituir o uso de explosivos por métodos mecânicos, sempre que possível."
+            ],
+            correta: 1,
+            justificativa: "Item 6.3.2: 'Caso haja necessidade de emprego de explosivos... a Fiscalização da Obra deverá ser antecipadamente notificada, pela Contratada, e deverá exigir a presença de profissional devidamente habilitado'."
+        },
+        { // 68
+            enunciado: "68) Sobre os Equipamentos de Proteção Individual (EPI), a ICA 85-16 estabelece que:",
+            alternativas: [
+                "a) A Administração deve fornecê-los aos funcionários da Contratada.",
+                "b) A Contratada deve fornecê-los a seus funcionários, de acordo com a NR 6.",
+                "c) O uso de EPI é facultativo para funcionários com mais de 5 anos de experiência.",
+                "d) Os EPIs devem ser adquiridos pela fiscalização e repassados à Contratada."
+            ],
+            correta: 1,
+            justificativa: "Item 6.3.3: 'A Contratada fornecerá a seus funcionários todos os equipamentos de proteção individual exigidos pela NR 6'."
+        },
+        { // 69
+            enunciado: "69) A ICA 85-16, ao tratar da substituição de materiais especificados, exige, além da prova de qualidade, uma análise estética para materiais que envolvam o aspecto visual da obra. Quem é responsável por esse julgamento estético?",
+            alternativas: [
+                "a) O arquiteto autor do projeto original.",
+                "b) A Diretoria de Infraestrutura da Aeronáutica.",
+                "c) A Contratada, que deve garantir a harmonia.",
+                "d) A Fiscalização da Obra."
+            ],
+            correta: 3,
+            justificativa: "Item 7.4.2: 'o material proposto deverá se harmonizar com o acabamento restante, a critério da Fiscalização da Obra.'"
+        },
+        { // 70
+            enunciado: "70) O Relatório Mensal de Obras (RMO), conforme modelo do Anexo H, é um documento de controle. Por quem ele deve ser elaborado?",
+            alternativas: [
+                "a) Pela Contratada.",
+                "b) Pela Fiscalização do Contrato.",
+                "c) Pela Fiscalização da Obra.",
+                "d) Pela DIRINFRA."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.21.1: 'Cabe à Fiscalização da Obra a elaboração do Relatório Mensal de Obra (RMO)'."
+        },
+        { // 71
+            enunciado: "71) A ICA 85-16 estabelece que a Comissão de Fiscalização do Contrato deve ser composta por, no mínimo, três membros. O Fiscal do Contrato, responsável pelo trato das questões administrativas, deve ser preferencialmente:",
+            alternativas: [
+                "a) Um engenheiro civil com especialização em gestão de contratos.",
+                "b) Um técnico em edificações com experiência em licitações.",
+                "c) Um oficial intendente ou oficial convocado na área jurídica (SJU).",
+                "d) Um arquiteto com registro no CREA e CAU."
+            ],
+            correta: 2,
+            justificativa: "Item 4.1.2: 'O Fiscal do Contrato deverá ser um oficial... preferencialmente do quadro de oficiais intendentes ou do quadro de oficiais convocados, na especialidade de advocacia'."
+        },
+        { // 72
+            enunciado: "72) As Comissões de Fiscalização (do Contrato e da Obra) são designadas por portaria. Essa portaria deve ser publicada:",
+            alternativas: [
+                "a) Exclusivamente no Diário Oficial da União.",
+                "b) No Boletim Interno da Administração e, quando houver membros de unidades distintas, também no BCA.",
+                "c) Apenas no processo administrativo da obra.",
+                "d) Em jornal de grande circulação local."
+            ],
+            correta: 1,
+            justificativa: "Itens 4.1.3 e 5.1.4: publicação no boletim interno da Administração e, se membros de unidades distintas, também no BCA."
+        },
+        { // 73
+            enunciado: "73) A ICA 85-16, no item 3.1.8, lista uma série de providências que cabem à Contratada junto a órgãos externos. Qual dos seguintes documentos NÃO é mencionado como responsabilidade da Contratada obter?",
+            alternativas: [
+                "a) 'Habite-se' ou Certificado de Conclusão na Prefeitura Municipal.",
+                "b) Licença Ambiental de Operação junto ao CONAMA ou órgão estadual.",
+                "c) Certidão Negativa de Débitos Trabalhistas da própria Contratada.",
+                "d) Aprovação das instalações junto ao Corpo de Bombeiros."
+            ],
+            correta: 2,
+            justificativa: "A CNDT é um documento de regularidade da empresa, exigido para recebimento (item 9.2.7), mas não é uma 'aprovação externa' listada no item 3.1.8."
+        },
+        { // 74
+            enunciado: "74) A retirada de amostras e o preparo de corpos de prova para ensaios de materiais devem ser executados:",
+            alternativas: [
+                "a) Exclusivamente pela Fiscalização da Obra.",
+                "b) Pela Contratada ou por pessoal técnico do laboratório selecionado, com a assistência da Fiscalização da Obra.",
+                "c) Por um laboratório independente contratado pela Administração.",
+                "d) Pelo engenheiro responsável da Contratada, sem necessidade de acompanhamento."
+            ],
+            correta: 1,
+            justificativa: "Item 7.2.2: 'A retirada de amostras e o preparo de corpos de prova serão executados pela Contratada ou por pessoal técnico do laboratório selecionado, com a assistência da Fiscalização da Obra'."
+        },
+        { // 75
+            enunciado: "75) A ICA 85-16 menciona que a Fiscalização da Obra deve manter atualizado o cronograma físico da obra. Qual a finalidade dessa atualização?",
+            alternativas: [
+                "a) Servir como único documento para a medição de serviços.",
+                "b) Substituir o Diário de Obras.",
+                "c) Conter a indicação dos serviços previstos e os efetivamente realizados.",
+                "d) Ser anexado à nota fiscal para pagamento."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.27: 'Manter atualizado o cronograma físico da obra, contendo a indicação dos serviços previstos e os efetivamente realizados.'"
+        },
+        { // 76
+            enunciado: "76) A placa de identificação da obra, a ser colocada no canteiro, deve seguir um padrão específico. Segundo a ICA 85-16, qual é esse padrão?",
+            alternativas: [
+                "a) O padrão definido pela DIRINFRA.",
+                "b) O padrão da marca da empresa contratada.",
+                "c) O padrão constante no Manual de Uso da Marca do Governo Federal - Obras.",
+                "d) O padrão definido pela Prefeitura Municipal local."
+            ],
+            correta: 2,
+            justificativa: "Item 6.2.8: 'A Placa de Obra deverá ser conforme padrão constante no Manual de Uso da Marca do Governo Federal - Obras.'"
+        },
+        { // 77
+            enunciado: "77) Se a OM responsável pela contratação não dispuser dos profissionais de nível superior (engenheiro ou arquiteto) para compor a Comissão de Recebimento, qual procedimento deve ser adotado?",
+            alternativas: [
+                "a) A obra não pode ser recebida até que tais profissionais sejam contratados.",
+                "b) A comissão pode ser composta apenas pelo presidente e um membro administrativo.",
+                "c) Deve-se solicitar apoio ao Órgão Sistêmico do Sistema de Engenharia que atua na sua região.",
+                "d) A DIRINFRA deve ser acionada para compor integralmente a comissão."
+            ],
+            correta: 2,
+            justificativa: "Item 9.1.3: 'Caso a OM responsável pela contratação... não disponha... deverá solicitar apoio ao Órgão Sistêmico do Sistema de Engenharia que atua na sua região.'"
+        },
+        { // 78
+            enunciado: "78) A ICA 85-16 estabelece que a Contratada deve alertar a Administração sobre a necessidade de fornecimento complementar de serviços e materiais. Em que momento isso deve ocorrer?",
+            alternativas: [
+                "a) Após a conclusão da obra, para que sejam aditivados.",
+                "b) Sempre após a emissão da Ordem de Serviço.",
+                "c) Tempestivamente, ou seja, com a devida antecedência, para que não haja prejuízos ao cronograma.",
+                "d) Apenas quando solicitado pela Fiscalização."
+            ],
+            correta: 2,
+            justificativa: "Item 3.1.18: 'A Contratada deverá alertar, tempestivamente, a Administração da necessidade do fornecimento complementar de serviços e materiais'."
+        },
+        { // 79
+            enunciado: "79) Sobre o recebimento de obras e serviços de engenharia, é correto afirmar, com base na ICA 85-16, que:",
+            alternativas: [
+                "a) O recebimento provisório é feito pela mesma comissão que fará o recebimento definitivo.",
+                "b) O recebimento definitivo só pode ocorrer após o decurso do prazo de verificação e recebimento e a correção de todas as deficiências apontadas no TERP.",
+                "c) O recebimento provisório dispensa a necessidade de um recebimento definitivo.",
+                "d) A assinatura do TERD é de responsabilidade exclusiva do Ordenador de Despesas."
+            ],
+            correta: 1,
+            justificativa: "Itens 9.2.8, 9.2.9 e 9.2.12: o TERP inicia o prazo de verificação, e o TERD é lavrado após esse período e a solução das pendências."
+        },
+        { // 80
+            enunciado: "80) A ICA 85-16, em seu item 5.4.21, determina que a Fiscalização da Obra deve encaminhar ao Fiscal do Contrato, em tempo hábil, toda a documentação necessária. Qual a finalidade desse encaminhamento?",
+            alternativas: [
+                "a) Para que o Fiscal do Contrato possa aprovar as medições.",
+                "b) Para o Controle Técnico Administrativo.",
+                "c) Para substituir o Diário de Obras.",
+                "d) Para que a Contratada possa ser notificada."
+            ],
+            correta: 1,
+            justificativa: "Item 5.4.21: 'Encaminhar ao Fiscal do Contrato, em tempo hábil, toda a documentação e informações necessárias ao Controle Técnico Administrativo.'"
+        },
+        { // 81
+            enunciado: "81) Em relação aos materiais perecíveis, qual é a obrigação da Contratada perante a Fiscalização da Obra, conforme o item 7.3.4?",
+            alternativas: [
+                "a) Utilizá-los todos nos primeiros 30 dias de obra.",
+                "b) Mantê-los em câmaras frigoríficas, independentemente do tipo.",
+                "c) Apresentar, antes da utilização, o prazo de validade dos materiais perecíveis.",
+                "d) Substituí-los por materiais não perecíveis, sempre que possível."
+            ],
+            correta: 2,
+            justificativa: "Item 7.3.4: 'A Contratada é obrigada a apresentar à Fiscalização da Obra, antes da utilização, o prazo de validade dos materiais perecíveis.'"
+        },
+        { // 82
+            enunciado: "82) A ICA 85-16 estabelece, no item 5.5.3, que a expedição da Ordem de Serviço é de competência exclusiva da Administração. Qual a ação da Fiscalização da Obra em relação a essa OS?",
+            alternativas: [
+                "a) Devolvê-la à Administração por não ser de sua competência.",
+                "b) Arquivá-la sem qualquer ação.",
+                "c) Registrar nela sua ciência, indicando o número do Boletim que publicou sua designação.",
+                "d) Entregar uma cópia à Contratada e manter a original em seus arquivos."
+            ],
+            correta: 2,
+            justificativa: "Item 5.5.3: 'A Fiscalização da Obra registrará, na referida OS, sua ciência, indicando o número do Boletim que publicou sua designação.'"
+        },
+        { // 83
+            enunciado: "83) A ICA 85-16 menciona a responsabilidade da Contratada pelo pagamento de todos os impostos, taxas e obrigações fiscais. Até quando essa responsabilidade se estende?",
+            alternativas: [
+                "a) Até o início da execução da obra.",
+                "b) Até a assinatura do Termo de Recebimento Provisório (TERP).",
+                "c) Até o Recebimento Definitivo das obras e serviços de engenharia.",
+                "d) Até o final do prazo de garantia de 5 anos."
+            ],
+            correta: 2,
+            justificativa: "Item 3.1.14: 'Efetuar o pagamento de todos os impostos, taxas e demais obrigações fiscais... até o Recebimento Definitivo das obras e serviços de engenharia.'"
+        },
+        { // 84
+            enunciado: "84) A ICA 85-16, no item 6.2.9.1, menciona a possibilidade de a Administração receber materiais pagos após a desmontagem do canteiro. Em que circunstância isso ocorre?",
+            alternativas: [
+                "a) Sempre, pois os materiais pertencem à União.",
+                "b) Quando a Contratada doar os materiais.",
+                "c) Quando houver interesse da Organização.",
+                "d) Quando os materiais forem solicitados pela DIRINFRA."
+            ],
+            correta: 2,
+            justificativa: "Item 6.2.9.1: 'todo material que tiver sido pago pela Administração será entregue à seção de material da Organização, caso haja interesse.'"
+        },
+        { // 85
+            enunciado: "85) O item 5.4.13 da ICA 85-16 estabelece que a Fiscalização da Obra deve anotar e registrar as ocorrências relacionadas com a execução. Em relação a procedimentos que dependam de providências, a quem a Fiscalização da Obra deve informar?",
+            alternativas: [
+                "a) Diretamente à Contratada.",
+                "b) À DIRINFRA.",
+                "c) Ao Fiscal do Contrato.",
+                "d) Ao Tribunal de Contas da União."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.13: 'Anotar e registrar todas as ocorrências relacionadas com a execução do objeto do contrato, informando ao Fiscal do Contrato procedimentos que dependam de providências'."
+        },
+        { // 86
+            enunciado: "86) A ICA 85-16 estabelece que a Contratada deve apresentar à Fiscalização da Obra, antes do início dos serviços, as licenças e registros necessários. Qual registro profissional é explicitamente mencionado?",
+            alternativas: [
+                "a) Registro da empresa na Junta Comercial.",
+                "b) Alvará de funcionamento da empresa.",
+                "c) Anotação de Responsabilidade Técnica (ART) junto ao CREA.",
+                "d) Inscrição no Cadastro Nacional de Pessoas Jurídicas (CNPJ)."
+            ],
+            correta: 2,
+            justificativa: "Item 3.2.1.1: 'em particular a ART (Anotação de Responsabilidade Técnica) junto ao CREA competente'."
+        },
+        { // 87
+            enunciado: "87) A Fiscalização da Obra tem a prerrogativa de solicitar a substituição de qualquer funcionário da Contratada. Qual é o prazo para a Contratada efetuar essa substituição ou, no mínimo, o afastamento do funcionário?",
+            alternativas: [
+                "a) Imediatamente.",
+                "b) 3 (três) dias úteis.",
+                "c) 5 (cinco) dias consecutivos.",
+                "d) 10 (dez) dias consecutivos."
+            ],
+            correta: 2,
+            justificativa: "Item 5.4.4.1: prazo de '5 (cinco) dias consecutivos' para a providência da Contratada."
+        },
+        { // 88
+            enunciado: "88) O Controle Sistêmico, na fase de conclusão da obra, determina o envio imediato de uma Mensagem Rádio à DIRINFRA. O que essa mensagem deve comunicar?",
+            alternativas: [
+                "a) O início do prazo de garantia.",
+                "b) A data da conclusão da obra ou serviço de engenharia.",
+                "c) O valor total pago até o momento.",
+                "d) A composição da Comissão de Recebimento."
+            ],
+            correta: 1,
+            justificativa: "Item 8.2.3.3: 'Deverá imediatamente ser enviada uma Mensagem Rádio à DIRINFRA, comunicando a data da conclusão da obra ou serviço de engenharia.'"
+        },
+        { // 89
+            enunciado: "89) A ICA 85-16, no item 3.1.5, estabelece que a responsabilidade da Contratada por vícios ou defeitos persiste mesmo depois de recebida a obra e devolvida a caução. A que legislação o texto faz referência para esses prazos?",
+            alternativas: [
+                "a) Lei de Licitações (Lei 8.666/93).",
+                "b) Código Civil.",
+                "c) Código de Defesa do Consumidor.",
+                "d) Regulamento de Administração da Aeronáutica (RCA 12-1)."
+            ],
+            correta: 1,
+            justificativa: "Item 3.1.5: 'Os prazos referentes à responsabilidade da Contratada, previstos no Código Civil, serão contados a partir da data de lavratura do Termo de Recebimento Definitivo de Obra – TERD.'"
+        },
+        { // 90
+            enunciado: "90) Após a lavratura do TERD, cabe ao Ordenador de Despesa da OM atestar a capacidade técnica de quem?",
+            alternativas: [
+                "a) Apenas da Contratada.",
+                "b) Apenas dos Fiscais da Obra.",
+                "c) Da Contratada e dos Fiscais da Obra.",
+                "d) Da Comissão de Recebimento."
+            ],
+            correta: 2,
+            justificativa: "Item 9.5: 'caberá ao Ordenador de Despesa da Organização Militar... atestar a capacidade técnica dos Fiscais da Obra e Serviço de Engenharia... e da Contratada.'"
+        },
+        { // 91
+            enunciado: "91) A ICA 85-16 veda a designação de um mesmo profissional para participar da Fiscalização de mais de uma obra de grande porte simultaneamente. Essa medida visa:",
+            alternativas: [
+                "a) Reduzir os custos com a fiscalização.",
+                "b) Minimizar a quantidade de erros técnicos e administrativos que poderiam surgir pela degradação técnica resultante do excessivo acúmulo de obras.",
+                "c) Permitir que a Administração contrate mais fiscais.",
+                "d) Agilizar o processo de recebimento das obras."
+            ],
+            correta: 1,
+            justificativa: "Item 5.1.2 justifica a distribuição equilibrada para 'minimizar a quantidade de erros técnicos e administrativos... ocasionada pela degradação técnica resultante do excessivo acúmulo de obras para fiscalizar'."
+        },
+        { // 92
+            enunciado: "92) O que a ICA 85-16 estabelece sobre a obrigatoriedade de os termos emitidos pela Fiscalização conterem as assinaturas?",
+            alternativas: [
+                "a) Apenas a do Fiscal da Obra é obrigatória.",
+                "b) A do Presidente da comissão é suficiente.",
+                "c) Devem conter as assinaturas de todos os Fiscais da Obra.",
+                "d) A assinatura do representante da Contratada dispensa a da Fiscalização."
+            ],
+            correta: 2,
+            justificativa: "Item 5.5.5: 'É obrigação que os termos emitidos pela Fiscalização contenha as assinaturas de todos os Fiscais da Obra.'"
+        },
+        { // 93
+            enunciado: "93) A responsabilidade da Fiscalização da Obra se aplica a serviços realizados antes da data de sua constituição?",
+            alternativas: [
+                "a) Sim, pois a comissão assume todo o histórico da obra.",
+                "b) Sim, mas apenas em relação aos aspectos administrativos.",
+                "c) Não. A Fiscalização da Obra não responde pela adequação ou execução de obras e serviços de engenharia já realizados em datas anteriores à data em que foi constituída.",
+                "d) Depende da análise do caso concreto pelo Ordenador de Despesas."
+            ],
+            correta: 2,
+            justificativa: "Item 5.5.6: 'A Fiscalização da Obra não responde pela adequação ou execução de obras e serviços de engenharia já realizados em datas anteriores à data em que foi constituída.'"
+        },
+        { // 94
+            enunciado: "94) A ICA 85-16 menciona que o controle da execução de obras e serviços de engenharia é de atribuição da Fiscalização da Obra, que, por sua vez, assessora qual outro órgão?",
+            alternativas: [
+                "a) A DIRINFRA.",
+                "b) A Contratada.",
+                "c) A Fiscalização do Contrato.",
+                "d) A Comissão de Recebimento."
+            ],
+            correta: 2,
+            justificativa: "Item 5.6.1: 'O controle da execução de obras e serviços de engenharia é de atribuição da Fiscalização da Obra, que assessora a Fiscalização do Contrato.'"
+        },
+        { // 95
+            enunciado: "95) Sobre as medidas de segurança, a ICA 85-16 estabelece que a Contratada deve manter 'Seguro de Acidentes do Trabalho' para todos os seus empregados. Qual a amplitude da responsabilidade da Contratada em caso de acidentes?",
+            alternativas: [
+                "a) A responsabilidade é limitada ao valor do seguro contratado.",
+                "b) A Administração divide a responsabilidade, por ser a dona da obra.",
+                "c) A Contratada responderá nos termos da legislação vigente por qualquer acidente ocorrido com seu pessoal, materiais, ou terceiros.",
+                "d) A responsabilidade é apenas por acidentes com seus próprios funcionários."
+            ],
+            correta: 2,
+            justificativa: "Item 6.3.7: 'A Contratada... responderá nos termos da legislação vigente, por qualquer acidente ocorrido com o pessoal, material, instalações, equipamentos sob sua responsabilidade, bem como com terceiros, durante a execução das obras.'"
+        },
+        { // 96
+            enunciado: "96) A ICA 85-16 estabelece que a Contratada deve se submeter às normas ou medidas de segurança exigidas por quem?",
+            alternativas: [
+                "a) Pela Fiscalização da Obra.",
+                "b) Exclusivamente pelo Ministério do Trabalho.",
+                "c) Pela Administração.",
+                "d) Pelo Corpo de Bombeiros local."
+            ],
+            correta: 2,
+            justificativa: "Item 6.3.8: 'A Contratada deverá se submeter às normas ou medidas de segurança exigidas pela Administração.'"
+        },
+        { // 97
+            enunciado: "97) Em relação aos ensaios de materiais, se não houver normas da ABNT ou do COMAER, o que a ICA 85-16 orienta que seja utilizado?",
+            alternativas: [
+                "a) Normas estrangeiras aplicáveis.",
+                "b) A experiência do engenheiro responsável.",
+                "c) Normas de órgãos municipais.",
+                "d) O padrão definido pela Contratada."
+            ],
+            correta: 0,
+            justificativa: "Item 7.2.3: 'Os materiais deverão ser ensaiados de acordo com os índices das normas e métodos da ABNT ou normas estrangeiras aplicáveis, na ausência de normas da ABNT ou do COMAER.'"
+        },
+        { // 98
+            enunciado: "98) O transporte, manuseio e armazenamento de materiais devem seguir qual norma regulamentadora do Ministério do Trabalho, mencionada na ICA 85-16?",
+            alternativas: [
+                "a) NR 6 (EPI).",
+                "b) NR 11 (Transporte e Armazenagem).",
+                "c) NR 18 (PCMAT).",
+                "d) NR 35 (Trabalho em Altura)."
+            ],
+            correta: 1,
+            justificativa: "Item 7.3.1: '...de acordo com a Norma Regulamentadora nº11 (NR11) do Ministério do Trabalho.'"
+        },
+        { // 99
+            enunciado: "99) A ICA 85-16, no item 5.4.9, atribui à Fiscalização da Obra o poder de rejeitar materiais de má qualidade. Qual ação adicional é esperada da Fiscalização nesse caso?",
+            alternativas: [
+                "a) Encaminhar o material rejeitado para análise da DIRINFRA.",
+                "b) Estipular o prazo para a sua retirada do canteiro de serviço da obra.",
+                "c) Aplicar uma multa à Contratada proporcional ao valor do material.",
+                "d) Registrar o fato no Diário de Obras e arquivar a notificação."
+            ],
+            correta: 1,
+            justificativa: "Item 5.4.9: 'Rejeitar todo e qualquer material de má qualidade ou não especificado e estipular o prazo para a sua retirada do canteiro de serviço da obra.'"
+        },
+        { // 100
+            enunciado: "100) O Termo de Aceitação de Medição de Obras e Serviços de Engenharia (Anexo N) deve conter a conclusão da Comissão de Fiscalização. Após sua lavratura, para onde ele é encaminhado, juntamente com a nota fiscal?",
+            alternativas: [
+                "a) Diretamente à Contratada para pagamento.",
+                "b) À Fiscalização do Contrato.",
+                "c) À DIRINFRA para autorização de pagamento.",
+                "d) Ao setor financeiro da OM para pagamento imediato."
+            ],
+            correta: 1,
+            justificativa: "Item 4.2.4: cabe à Fiscalização do Contrato 'Receber a nota fiscal do serviço executado... assim como o correspondente Termo de Aceitação de Medição... lavrado pela Comissão de Fiscalização da Obra'."
+        }
+    ];
+
+    // ---------- estado interno ----------
+    let respostasUsuario = new Array(questoes.length).fill(null);
+    let respostasConfirmadas = new Array(questoes.length).fill(false);
+
+    // elementos da página
+    const capa = document.getElementById('capa');
+    const conteudo = document.getElementById('conteudoProva');
+    const btnIniciar = document.getElementById('btnIniciar');
+    const container = document.getElementById('questoesContainer');
+    const notaSpan = document.getElementById('notaExibida');
+    const acertosSpan = document.getElementById('acertosStatus');
+    const errosSpan = document.getElementById('errosStatus');
+    const limparBtn = document.getElementById('limparRespostas');
+    const imprimirBtn = document.getElementById('btnImprimir');
+
+    btnIniciar.addEventListener('click', ()=>{
+        capa.style.display = 'none';
+        conteudo.style.display = 'block';
+        renderQuestoes();
+        atualizaPlacar();
+    });
+
+    function renderQuestoes() {
+        let html = '';
+        for (let i = 0; i < questoes.length; i++) {
+            const q = questoes[i];
+            const selecionada = respostasUsuario[i];
+            const confirmada = respostasConfirmadas[i];
+            const letras = ['A','B','C','D'];
+
+            html += `<div class="questao-item" id="q-${i}">`;
+            html += `<div class="enunciado">${q.enunciado}</div>`;
+            html += `<div class="alternativas">`;
+
+            for (let altIdx = 0; altIdx < q.alternativas.length; altIdx++) {
+                let classe = 'alternativa';
+                if (selecionada === altIdx && confirmada) {
+                    classe += (altIdx === q.correta) ? ' certa' : ' errada';
+                } else if (selecionada === altIdx && !confirmada) {
+                    classe += ' selecionada';
+                }
+
+                const disabledAttr = confirmada ? ' style="pointer-events:none; opacity:0.8;"' : '';
+
+                html += `<div class="${classe}" data-q="${i}" data-alt="${altIdx}" ${confirmada ? 'data-respondida="true"' : ''}>`;
+                html += `<span class="letra">${letras[altIdx]}</span>`;
+                html += `<span>${q.alternativas[altIdx]}</span>`;
+                html += `</div>`;
+            }
+
+            html += `</div>`; // fecha alternativas
+
+            if (confirmada && selecionada !== null) {
+                html += `<div class="justificativa">✅ <strong>Justificativa:</strong> ${q.justificativa}</div>`;
+            }
+
+            html += `</div>`; // fecha questao-item
+        }
+        container.innerHTML = html;
+
+        // eventos para alternativas não respondidas
+        document.querySelectorAll('.alternativa:not([data-respondida="true"])').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const target = e.currentTarget;
+                const qIdx = parseInt(target.dataset.q);
+                const altIdx = parseInt(target.dataset.alt);
+                if (respostasConfirmadas[qIdx]) return;
+
+                // desmarca outras da mesma questão
+                document.querySelectorAll(`[data-q="${qIdx}"]`).forEach(irmao => irmao.classList.remove('selecionada'));
+                target.classList.add('selecionada');
+                respostasUsuario[qIdx] = altIdx;
+            });
+
+            // duplo clique confirma
+            el.addEventListener('dblclick', (e) => {
+                const target = e.currentTarget;
+                const qIdx = parseInt(target.dataset.q);
+                if (respostasConfirmadas[qIdx]) return;
+                const altIdx = parseInt(target.dataset.alt);
+                if (respostasUsuario[qIdx] !== altIdx) return; // só confirma a selecionada
+
+                respostasConfirmadas[qIdx] = true;
+                respostasUsuario[qIdx] = altIdx;
+                renderQuestoes();
+                atualizaPlacar();
+            });
+        });
+
+        // bloqueia cliques em já respondidas
+        document.querySelectorAll('.alternativa[data-respondida="true"]').forEach(el => {
+            el.style.pointerEvents = 'none';
+        });
+    }
+
+    function atualizaPlacar() {
+        let acertos = 0;
+        for (let i = 0; i < questoes.length; i++) {
+            if (respostasConfirmadas[i] && respostasUsuario[i] === questoes[i].correta) acertos++;
+        }
+        const erros = respostasConfirmadas.filter((v,i) => v && respostasUsuario[i] !== questoes[i].correta).length;
+        const nota = (acertos / questoes.length) * 10;
+        notaSpan.innerText = nota.toFixed(2);
+        acertosSpan.innerText = `Acertos: ${acertos} / 50 (${((acertos/50)*100).toFixed(1)}%)`;
+        errosSpan.innerText = `Erros: ${erros}`;
+    }
+
+    limparBtn.addEventListener('click', ()=>{
+        respostasUsuario = new Array(questoes.length).fill(null);
+        respostasConfirmadas = new Array(questoes.length).fill(false);
+        renderQuestoes();
+        atualizaPlacar();
+    });
+
+    imprimirBtn.addEventListener('click', ()=>{
+        window.print();
+    });
+
+})();
+</script>
+</body>
+</html>
